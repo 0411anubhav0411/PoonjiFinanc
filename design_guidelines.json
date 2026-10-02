@@ -1,0 +1,304 @@
+{
+  "project_name": "Poonji Finance",
+  "archetype": "THE PERFORMANCE PRO & EDITORIAL TRUST (Fintech Elite)",
+  "emotional_tone": "Authoritative, ultra-modern, transparent, prestigious Indian financial consultancy. Not a sterile legacy PSU bank, but a sleek, high-precision advisory platform empowering Indian founders, MSMEs, families, and high-net-worth investors.",
+  "locale_conventions": {
+    "currency_symbol": "₹",
+    "number_format": "Indian numbering system (Lakhs, Crores, e.g. ₹25,00,000 / ₹1.5 Cr)",
+    "date_format": "DD/MM/YYYY",
+    "phone_format": "+91 98765 43210"
+  },
+  "typography": {
+    "font_imports": [
+      "@import \"@fontsource-variable/plus-jakarta-sans\";",
+      "@import \"@fontsource-variable/space-grotesk\";",
+      "@import \"@fontsource-variable/jetbrains-mono\";"
+    ],
+    "heading_font": "'Space Grotesk Variable', sans-serif",
+    "body_font": "'Plus Jakarta Sans Variable', sans-serif",
+    "mono_font": "'JetBrains Mono Variable', monospace",
+    "scale_px": {
+      "display": 60,
+      "h1": 48,
+      "h2": 36,
+      "h3": 24,
+      "h4": 20,
+      "body": 16,
+      "caption": 14
+    },
+    "rules": {
+      "headings": "font-heading font-bold tracking-tight text-slate-900 dark:text-white leading-[1.15]",
+      "hero_title": "text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold tracking-tighter leading-[1.08]",
+      "section_title": "text-2xl sm:text-3xl lg:text-4xl font-heading font-bold tracking-tight",
+      "body": "font-sans text-base leading-relaxed text-slate-600 dark:text-slate-300",
+      "overlines": "text-xs font-mono font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400",
+      "numbers_stats": "font-heading font-bold tracking-tight",
+      "calculator_outputs": "font-mono font-bold text-2xl sm:text-3xl"
+    }
+  },
+  "colors": {
+    "surfaces": [
+      {
+        "name": "page",
+        "kind": "solid",
+        "bg": "#070B14",
+        "on_bg": "#F8FAFC",
+        "on_bg_muted": "#94A3B8",
+        "roles": {
+          "link": "#38BDF8",
+          "error": "#F87171",
+          "success": "#34D399",
+          "warning": "#FBBF24"
+        }
+      },
+      {
+        "name": "card_elevated",
+        "kind": "solid",
+        "bg": "#0F172A",
+        "on_bg": "#FFFFFF",
+        "on_bg_muted": "#94A3B8",
+        "roles": {
+          "border": "#1E293B",
+          "hover_border": "#3B82F6",
+          "accent_badge": "#1E3A8A"
+        }
+      },
+      {
+        "name": "card_subtle",
+        "kind": "solid",
+        "bg": "#131D31",
+        "on_bg": "#F8FAFC",
+        "on_bg_muted": "#CBD5E1",
+        "roles": {
+          "border": "#27354F"
+        }
+      },
+      {
+        "name": "glass_header",
+        "kind": "glass",
+        "contrast_against": "#070B14",
+        "guarantee": "backdrop-blur-xl bg-[#070B14]/80 border-b border-slate-800/80 shadow-lg",
+        "on_bg": "#FFFFFF",
+        "on_bg_muted": "#94A3B8",
+        "roles": {
+          "link_active": "#38BDF8"
+        }
+      },
+      {
+        "name": "hero_banner",
+        "kind": "gradient",
+        "contrast_against": "#070B14",
+        "guarantee": "bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(37,99,235,0.25),rgba(7,11,20,0.95))]",
+        "on_bg": "#FFFFFF",
+        "on_bg_muted": "#94A3B8"
+      },
+      {
+        "name": "accent_badge_pill",
+        "kind": "solid",
+        "bg": "#1E293B",
+        "on_bg": "#60A5FA",
+        "on_bg_muted": "#93C5FD"
+      },
+      {
+        "name": "cta_surface",
+        "kind": "solid",
+        "bg": "#2563EB",
+        "on_bg": "#FFFFFF",
+        "on_bg_muted": "#DBEAFE"
+      },
+      {
+        "name": "calculator_display_panel",
+        "kind": "solid",
+        "bg": "#0B1324",
+        "on_bg": "#FFFFFF",
+        "on_bg_muted": "#94A3B8"
+      }
+    ],
+    "accent": "#2563EB",
+    "accent_hover": "#1D4ED8",
+    "accent_glow": "rgba(37, 99, 235, 0.35)",
+    "accent_cyan": "#06B6D4",
+    "accent_emerald": "#10B981",
+    "accent_amber": "#F59E0B",
+    "on_accent": "#FFFFFF"
+  },
+  "entry_surfaces": {
+    "/": "split hero with kinetic masked headline + live interactive rate & consultation ticker left, live Quick EMI sandbox widget right; editorial trust badges beneath",
+    "/calculators": "full-bleed interactive financial suite with category tabs, dual-range sliders, live Recharts breakdown visualization, and Instant Consultation CTA",
+    "/services": "asymmetric bento grid of 6 core verticals (Business Loans, Home Loans, Mutual Funds & SIPs, Fixed Deposits, Life & Health Insurance, MSME Working Capital)",
+    "/about": "editorial storytelling timeline — vision, credibility metrics (₹500Cr+ Facilitated, 45+ Bank Partners), compliance governance, and advisory philosophy",
+    "/founders": "executive profile split grid with leadership bios, track record, investment pedigree, and direct meeting booking modal",
+    "/how-it-works": "interactive 4-stage facilitation pipeline (Consultation -> Bank Matching -> Documentation -> Fast Disbursement)",
+    "/resources": "categorized financial intelligence library with downloadable guides, tax calculators, glossary, and video insights",
+    "/blog": "curated editorial insights feed with featured cover story, filter chips, reading time, and lead capture newsletter",
+    "/contact": "split contact terminal with callback request wizard, Bangalore/Mumbai office locations, WhatsApp direct trigger, and phone lines",
+    "/faqs": "segmented accordion categorized into Loans, Investments, Insurance, and Process with live search bar"
+  },
+  "brand_identity": {
+    "brand_name": "Poonji Finance",
+    "tagline": "One Platform. Multiple Financial Solutions.",
+    "hero_headline": "Your Financial Goals. Our Guidance.",
+    "sub_headline": "Empowering Indian enterprises, entrepreneurs, and families with bespoke credit facilitation, high-yield wealth management, and comprehensive risk advisory across 45+ Tier-1 banking partners.",
+    "logo_concept": "Geometric modern monogram 'P' intertwined with growth ascension arrow in electric blue (#2563EB) and cyan (#06B6D4) on dark obsidian shield."
+  },
+  "motion_and_interaction": {
+    "library": "motion/react (framer-motion)",
+    "smooth_scroll": "Lenis smooth scroll on root container",
+    "hero_reveal": "Staggered line mask reveal with easeOut: [0.16, 1, 0.3, 1]",
+    "ticker_marquee": "Continuous smooth marquee for banking partner logos (HDFC, ICICI, SBI, Axis, Kotak, Tata Capital, Bajaj Finserv, Aditya Birla)",
+    "card_hover": "Subtle border glow trace with translate-y -2px and ambient box-shadow highlight",
+    "calculator_transitions": "Spring transition on slider values and Recharts pie/bar transitions (spring stiffness 300, damping 25)",
+    "reduced_motion": "All motion variants MUST respect prefers-reduced-motion via standard framer-motion props"
+  },
+  "components_and_features": {
+    "navigation_bar": {
+      "type": "Crystal Glass Sticky Header",
+      "items": [
+        {"label": "Services", "path": "/services"},
+        {"label": "Calculators", "path": "/calculators"},
+        {"label": "How It Works", "path": "/how-it-works"},
+        {"label": "About & Founders", "path": "/about"},
+        {"label": "Resources", "path": "/resources"},
+        {"label": "Contact", "path": "/contact"}
+      ],
+      "quick_cta": "Request Callback",
+      "phone_hotline": "1800-890-POONJI",
+      "portal_tag": "₹500Cr+ Facilitated"
+    },
+    "interactive_calculators_suite": {
+      "path": "/calculators",
+      "calculators_included": [
+        {
+          "id": "emi",
+          "name": "General Loan EMI Calculator",
+          "inputs": ["Loan Amount (₹)", "Interest Rate (% p.a.)", "Tenure (Years/Months)"],
+          "outputs": ["Monthly EMI", "Total Interest Payable", "Total Amount"]
+        },
+        {
+          "id": "home-loan",
+          "name": "Home Loan EMI & Tax Benefit",
+          "inputs": ["Property Value (₹)", "Down Payment (₹)", "Loan Tenure", "Interest Rate"],
+          "outputs": ["Monthly EMI", "Principal Component", "Interest Component", "Tax Savings Section 80C & 24b"]
+        },
+        {
+          "id": "personal-loan",
+          "name": "Personal Loan Calculator",
+          "inputs": ["Loan Amount", "Interest Rate (10.5% - 24%)", "Tenure (1-5 Yrs)"],
+          "outputs": ["Monthly EMI", "Processing Fee estimate", "Total Repayment"]
+        },
+        {
+          "id": "business-loan",
+          "name": "MSME / Business Loan Eligibility",
+          "inputs": ["Annual Turnover (₹)", "Existing Monthly EMIs (₹)", "Vintage (Years in Business)", "GST Filing Status"],
+          "outputs": ["Estimated Credit Limit (₹)", "Recommended Bank Tier", "Indicative Rate Band"]
+        },
+        {
+          "id": "sip",
+          "name": "Mutual Fund SIP Wealth Builder",
+          "inputs": ["Monthly Investment (₹)", "Expected Return Rate (% p.a.)", "Time Period (Years)"],
+          "outputs": ["Invested Amount", "Estimated Returns", "Maturity Wealth (₹) with Crorepati Milestones"]
+        },
+        {
+          "id": "lumpsum",
+          "name": "Lumpsum Mutual Fund Investment",
+          "inputs": ["Total Investment (₹)", "Expected Return Rate (%)", "Tenure (Years)"],
+          "outputs": ["Invested Capital", "Wealth Gain", "Final Corpus"]
+        },
+        {
+          "id": "fd",
+          "name": "Fixed Deposit (FD) Yield Calculator",
+          "inputs": ["Deposit Amount (₹)", "Interest Rate (% p.a.)", "Tenure", "Compounding Frequency (Quarterly/Cumulative)"],
+          "outputs": ["Maturity Amount", "Aggregate Interest Earned", "Senior Citizen Comparison"]
+        },
+        {
+          "id": "rd",
+          "name": "Recurring Deposit (RD) Calculator",
+          "inputs": ["Monthly Deposit (₹)", "Rate of Interest (%)", "Tenure (Months)"],
+          "outputs": ["Total Invested", "Maturity Proceeds", "Quarterly Yield"]
+        }
+      ]
+    },
+    "lead_generation_system": {
+      "enquiry_form": {
+        "fields": ["Full Name", "Phone (+91)", "Email", "Service Needed (Dropdown)", "Loan/Investment Amount (₹)", "City", "Preferred Callback Time"],
+        "validation": "Strict phone number (10 digits) + email format with instant feedback",
+        "instant_feedback": "Sonner toast confirmation + dynamic Lead ID generation"
+      },
+      "callback_modal": {
+        "trigger": "Global CTA and sticky quick-action bar",
+        "speed_pledge": "Call back guaranteed within 30 minutes during business hours"
+      },
+      "admin_leads_tray": {
+        "description": "Built-in Admin Leads Manager (/admin or drawer) to review submitted inquiries, filter by service type, status update (New, In Review, Connected, Approved), and CSV export simulation"
+      }
+    }
+  },
+  "image_urls": {
+    "team_and_founders": [
+      {
+        "url": "https://images.unsplash.com/photo-1771244688590-1e481dba1b5a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHw0fHxpbmRpYW4lMjBmaW5hbmNpYWwlMjBhZHZpc29yJTIwdGVhbSUyMG9mZmljZXxlbnwwfHx8fDE3OTA5MTEwMjV8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Poonji Finance Founder & Chief Investment Officer at desk with laptop in corporate financial headquarters",
+        "category": "Founders / Leadership",
+        "usage_location": "Our Founders page, Hero advisory spotlight"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBmaW5hbmNpYWwlMjBhZHZpc29yJTIwdGVhbSUyMG9mZmljZXxlbnwwfHx8fDE3OTA5MTEwMjV8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Senior credit committee and investment advisory team meeting in modern boardroom",
+        "category": "Team / Advisory Committee",
+        "usage_location": "About Us page, How We Work committee section"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1642345584279-9810f0b1359c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHwzfHxpbmRpYW4lMjBmaW5hbmNpYWwlMjBhZHZpc29yJTIwdGVhbSUyMG9mZmljZXxlbnwwfHx8fDE3OTA5MTEwMjV8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Client consultation session with financial advisors reviewing portfolio documentation",
+        "category": "Consultation / Advisory",
+        "usage_location": "Services page, Consultation showcase"
+      }
+    ],
+    "cityscape_and_prestige": [
+      {
+        "url": "https://images.unsplash.com/photo-1785768699591-d0845b8e7478?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA4Mzl8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjBtdW1iYWklMjBza3lzY3JhcGVyJTIwZmluYW5jaWFsJTIwZGlzdHJpY3R8ZW58MHx8fHwxNzkwOTExMDI1fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Gleaming high-rise financial center in Mumbai BKC financial district against golden sunset",
+        "category": "Architectural / Prestige",
+        "usage_location": "Hero backdrop overlay, Contact page Mumbai office visual"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1770331373157-89d085ed7ea2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA4Mzl8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBtdW1iYWklMjBza3lzY3JhcGVyJTIwZmluYW5jaWFsJTIwZGlzdHJpY3R8ZW58MHx8fHwxNzkwOTExMDI1fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Panoramic vista of Indian financial capital cityscape and commercial hubs",
+        "category": "Cityscape / Pan-India Reach",
+        "usage_location": "About Us pan-India presence section, Footer backdrop"
+      }
+    ],
+    "client_milestones_and_homes": [
+      {
+        "url": "https://images.unsplash.com/photo-1780329946888-0db2441b249c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBmYW1pbHklMjBob21lJTIwa2V5JTIwYnV5aW5nJTIwaG91c2V8ZW58MHx8fHwxNzkwOTExMDI2fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Multi-generational Indian family celebrating home ownership and financial milestone",
+        "category": "Client Stories / Home Loans",
+        "usage_location": "Home Loans service card, Testimonials / Case Studies"
+      }
+    ]
+  },
+  "bank_partners": [
+    {"name": "HDFC Bank", "tier": "Private Sector Leader", "rate_from": "8.40%"},
+    {"name": "State Bank of India (SBI)", "tier": "Public Sector Giant", "rate_from": "8.35%"},
+    {"name": "ICICI Bank", "tier": "Private Sector Major", "rate_from": "8.45%"},
+    {"name": "Axis Bank", "tier": "Private Sector Major", "rate_from": "8.50%"},
+    {"name": "Kotak Mahindra Bank", "tier": "Private Banking", "rate_from": "8.40%"},
+    {"name": "Tata Capital", "tier": "NBFC Conglomerate", "rate_from": "9.25%"},
+    {"name": "Bajaj Finserv", "tier": "Retail & SME Leader", "rate_from": "9.10%"},
+    {"name": "Aditya Birla Finance", "tier": "Diversified NBFC", "rate_from": "9.15%"}
+  ],
+  "accessibility": {
+    "wcag_compliance": "WCAG 2.1 AA",
+    "color_contrast_min": "4.5:1 for normal body text, 3:1 for large display headers",
+    "keyboard_navigation": "Full tab order with visible ring-offset-2 ring-blue-500 indicators",
+    "data_testid_convention": "All interactive elements, buttons, tabs, sliders, inputs, lead forms must have explicit data-testid attributes (e.g. data-testid='emi-slider-amount', data-testid='submit-callback-button', data-testid='nav-link-calculators')"
+  },
+  "instructions_to_main_agent": [
+    "Follow the theme in frontend/src/index.css using Tailwind v4. The default aesthetic is sleek obsidian-dark with royal blue (#2563EB) & electric cyan accents, designed for elite Indian financial facilitation.",
+    "Implement the 8 interactive financial calculators with real-time reactive sliders, number formatting with Rupee symbols, and dynamic Recharts pie/bar visualizations.",
+    "Ensure the hero has the exact headline 'Your Financial Goals. Our Guidance.' and positioning 'One Platform. Multiple Financial Solutions.'",
+    "Build out all required pages: Home (/), About Us (/about), Our Founders (/founders), Our Services (/services), Financial Tools & Calculators (/calculators), How It Works (/how-it-works), Resources & Financial Guides (/resources), Blog (/blog & /blog/:slug), FAQs (/faqs), Contact Us (/contact), Privacy Policy (/privacy), Terms of Service (/terms), and Admin Leads view (/admin).",
+    "Ensure lead generation forms (callback & detailed enquiry) connect to FastAPI backend /api/leads with immediate UI feedback via sonner toasts.",
+    "Add test IDs (`data-testid`) to every interactive component (buttons, inputs, sliders, navigation links, modals) for automated test verification."
+  ]
+}
