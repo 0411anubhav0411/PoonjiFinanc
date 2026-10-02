@@ -35,7 +35,7 @@ Build a modern, premium, trustworthy multi-page website for Poonji Finance, an I
 ## Implemented (2026-10-02, round 2)
 - Real founders: Balbir Singh Gogia (Founder & Managing Partner), Harshual Singh Gogia (Partner & CEO), Harshita Singh Gogia (COO) — monogram cards (no photos provided yet).
 - Brand: company logo (logo.png) in navbar/footer/favicon; theme re-tuned to logo palette — royal blue + gold accents, red kept minimal (marquee separators only).
-- Lead email alerts: Emergent managed Resend proxy; HTML template + guardrail gate; fires non-blocking on every enquiry/callback. Verified 202 Accepted with test inbox. Recipient = LEAD_NOTIFY_EMAIL in backend/.env — currently placeholder hello@poonjifinance.in (proxy 422s on it — needs the user's REAL inbox email).
+- Lead email alerts: HTML template + guardrail gate; SMTP-configurable and non-blocking on every enquiry/callback. Configure SMTP_HOST and LEAD_NOTIFY_EMAIL for deployment.
 - Calculators: 8 more added (Step-Up SIP, SWP, CAGR, Simple Interest, Compound Interest, Inflation, Retirement, Goal-Based) → 16 total.
 - Admin: per-lead status pills (New/Contacted/Closed) via POST /api/leads/{kind}/{id}/status + one-click CSV export per tab.
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Download } from "lucide-react";
-import { apiGet, apiPatch, apiPost } from "@/lib/api";
+import { apiGet, apiPatch, apiPost, apiUrl } from "@/lib/api";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -106,7 +106,7 @@ function CustomerFileDialog({ id, onClose }: { id: string; onClose: () => void }
                   <div key={d.id} className="grid gap-2 rounded-xl border border-border p-3 sm:grid-cols-[1fr_auto_auto] sm:items-center" data-testid={`admin-doc-${d.id.slice(0, 8)}`}>
                     <div>
                       <p className="text-sm font-semibold">{d.doc_type} <span className="text-xs font-normal text-muted-foreground">· {d.category}</span></p>
-                      <a href={`/api/portal/documents/${d.id}/download`} data-testid={`admin-doc-dl-${d.id.slice(0, 8)}`} className="inline-flex items-center gap-1 text-xs text-blue-800 hover:text-blue-600">
+                      <a href={apiUrl(`/portal/documents/${d.id}/download`)} data-testid={`admin-doc-dl-${d.id.slice(0, 8)}`} className="inline-flex items-center gap-1 text-xs text-blue-800 hover:text-blue-600">
                         <Download className="h-3 w-3" /> {d.filename}
                       </a>
                     </div>

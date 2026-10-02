@@ -168,28 +168,38 @@ matching Chromium browsers live at `/pw-browsers`.
 The backend lane is pytest: this template's backend is Python, so `vitest` does
 not apply to it.
 
-## Pod conventions
+## Production deployment
 
-This template runs under supervisord in the Emergent agent pod — supersedes any
-local-run instructions above.
+The frontend is a Vite SPA on Vercel and the FastAPI backend runs on Render.
+MongoDB must be provided by an external MongoDB service such as Atlas; configure
+its connection string as `MONGO_URL` in Render.
 
-- Backend, frontend, and `mongod` are each a supervisor program. After code or
-  config changes, restart and wait for readiness:
+### Vercel
 
-  ```bash
-  sudo supervisorctl restart frontend backend
-  until curl -sf -o /dev/null http://localhost:3000; do sleep 2; done
-  ```
+Create a project from this repository with `frontend` as the Root Directory.
+Use `npm run build` as the build command and `dist` as the output directory.
+Set `VITE_API_BASE_URL` to `https://api.poonjifinance.com`, add both
+`www.poonjifinance.com` and `poonjifinance.com` as domains, and redirect the
+apex domain to `www`.
 
-- Status, only after a restart you triggered:
-  `sudo supervisorctl status frontend backend`. Logs:
-  `/var/log/supervisor/backend.err.log`, `backend.out.log`,
-  `frontend.err.log`.
-- App in a browser: the pod's preview URL (frontend, port `3000`). Backend API
-  directly at port `8001`.
-- `mongod` runs locally in the pod (`--bind_ip_all`); `MONGO_URL` in
-  `backend/.env` points at `localhost`, no separate Mongo container.
-- Both dev servers hot-reload on file edits (uvicorn `--reload` for the backend,
-  Vite HMR for the frontend); no rebuild step needed for normal iteration. A
-  restart is still needed after changing `.env`, `requirements.txt`, or
-  `vite.config.ts`.
+### Render
+
+Create a Blueprint from `render.yaml`. The blueprint provisions the API service
+and a persistent disk for customer document uploads. Set the prompted values
+for `MONGO_URL`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, SMTP credentials, and
+`LEAD_NOTIFY_EMAIL`. `APP_URL` is set to the production website for password
+reset links. Configure and verify the sending domain with your SMTP provider
+before relying on email verification or notifications. Add
+`api.poonjifinance.com` as a custom domain on the Render service.
+
+### GoDaddy DNS
+
+In the domain's DNS settings, use the exact targets shown by Vercel and Render:
+
+- `A` record: host `@`, value `76.76.21.21` (or the current Vercel value).
+- `CNAME` record: host `www`, value `cname.vercel-dns.com` (or the current Vercel value).
+- `CNAME` record: host `api`, value is the Render service hostname shown in its dashboard.
+
+Remove conflicting records for those hosts. Wait for DNS/TLS provisioning, then
+confirm `https://www.poonjifinance.com`, `https://api.poonjifinance.com/api/`,
+login, email verification, and document upload/download.

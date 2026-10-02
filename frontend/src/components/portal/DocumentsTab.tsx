@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Download, FileText, Upload } from "lucide-react";
-import { apiGet } from "@/lib/api";
+import { apiGet, apiUrl } from "@/lib/api";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import type { PortalDoc } from "@/lib/types";
@@ -43,7 +43,7 @@ export function DocumentsTab() {
       fd.append("file", file);
       fd.append("category", category);
       fd.append("doc_type", docType);
-      const res = await fetch("/api/portal/documents", { method: "POST", body: fd });
+      const res = await fetch(apiUrl("/portal/documents"), { method: "POST", body: fd, credentials: "include" });
       if (!res.ok) throw new Error(String(res.status));
       toast.success(`${docType} uploaded`);
       setFile(null);
@@ -130,7 +130,7 @@ export function DocumentsTab() {
                         {d.note && <p className="mt-1 text-xs text-amber-700">Note from Poonji: {d.note}</p>}
                       </div>
                       <span className={`rounded-full border px-2.5 py-1 text-xs font-medium ${meta.cls}`} data-testid={`doc-status-${d.id.slice(0, 8)}`}>{meta.label}</span>
-                      <a data-testid={`doc-download-${d.id.slice(0, 8)}`} href={`/api/portal/documents/${d.id}/download`} className="text-blue-800 hover:text-blue-600" aria-label={`Download ${d.doc_type}`}>
+                      <a data-testid={`doc-download-${d.id.slice(0, 8)}`} href={apiUrl(`/portal/documents/${d.id}/download`)} className="text-blue-800 hover:text-blue-600" aria-label={`Download ${d.doc_type}`}>
                         <Download className="h-4 w-4" />
                       </a>
                     </div>

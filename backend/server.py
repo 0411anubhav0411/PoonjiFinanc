@@ -23,7 +23,6 @@ JWT_ALGORITHM = "HS256"
 
 from lib.security import create_token, get_current_admin, get_current_user, hash_password, verify_password
 from lib.mail import notify_new_lead
-from lib.storage import init_storage
 from routers.register import router as register_router
 from routers.portal import router as portal_router
 from routers.admin_routes import router as admin_routes_router
@@ -53,10 +52,6 @@ async def seed_admin() -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await seed_admin()
-    try:
-        await asyncio.to_thread(init_storage)
-    except Exception as exc:
-        logger.error("storage init failed: %s", exc)
     app.state.index_task = asyncio.create_task(ensure_indexes())
     yield
     client.close()
@@ -249,7 +244,14 @@ app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get("CORS_ORIGINS", "*").split(","),
+    allow_origins=[
+        origin.strip()
+        for origin in os.environ.get(
+            "CORS_ORIGINS",
+            "http://localhost:3000,https://www.poonjifinance.com,https://poonjifinance.com",
+        ).split(",")
+        if origin.strip()
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
