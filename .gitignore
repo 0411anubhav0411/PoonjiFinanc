@@ -91,3 +91,5 @@ credentials.json
 *.key
 .credentials
 project.zip
+
+backend/uploads/
