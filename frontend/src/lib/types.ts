@@ -5,6 +5,7 @@ export interface PortalUser {
   mobile?: string;
   role: string;
   partner_status?: string | null;
+  email_verified?: boolean | null;
   profile?: Record<string, string>;
   created_at?: string;
 }
@@ -82,4 +83,18 @@ export interface PartnerPublic {
   mobile?: string;
   profile?: Record<string, string>;
   created_at?: string;
+}
+
+export interface BlogPostItem {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  excerpt: string;
+  body: string;
+  author: string;
+  read_time: string;
+  image?: string | null;
+  published: boolean;
+  created_at: string;
 }

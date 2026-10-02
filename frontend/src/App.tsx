@@ -20,6 +20,9 @@ import Partners from "@/pages/Partners";
 import Rates from "@/pages/Rates";
 import Updates from "@/pages/Updates";
 import Search from "@/pages/Search";
+import ForgotPassword from "@/pages/ForgotPassword";
+import ResetPassword from "@/pages/ResetPassword";
+import VerifyEmail from "@/pages/VerifyEmail";
 import Legal from "@/pages/Legal";
 import Admin from "@/pages/Admin";
 import NotFound from "@/pages/NotFound";
@@ -43,6 +46,9 @@ export default function App() {
         <Route path="/rates" element={<Rates />} />
         <Route path="/updates" element={<Updates />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/blog" element={<Blog />} />

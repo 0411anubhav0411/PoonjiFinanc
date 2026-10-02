@@ -1,16 +1,23 @@
 import { Link, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { apiGet } from "@/lib/api";
 import { Reveal } from "@/components/Reveal";
-import { BLOG_POSTS } from "@/data/content";
+import type { BlogPostItem } from "@/lib/types";
 import { useSeo } from "@/lib/seo";
 
 export default function BlogPost() {
   const { slug } = useParams();
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const postsQ = useQuery({ queryKey: ["blog"], queryFn: () => apiGet<BlogPostItem[]>("/blog") });
+  const post = (postsQ.data ?? []).find((p) => p.slug === slug);
   useSeo(
     post ? `${post.title} — Poonji Finance Blog` : "Blog — Poonji Finance",
     post?.excerpt ?? "Plain-language financial insights from Poonji Finance."
   );
+
+  if (postsQ.isLoading) {
+    return <div className="mx-auto max-w-3xl px-4 py-32 text-center text-muted-foreground">Loading article…</div>;
+  }
 
   if (!post) {
     return (
@@ -23,8 +30,8 @@ export default function BlogPost() {
     );
   }
 
-  const related = BLOG_POSTS.filter((p) => p.slug !== slug && p.category === post.category).slice(0, 2);
-  const fallback = BLOG_POSTS.filter((p) => p.slug !== slug).slice(0, 2 - related.length);
+  const related = (postsQ.data ?? []).filter((p) => p.slug !== slug && p.category === post.category).slice(0, 2);
+  const fallback = (postsQ.data ?? []).filter((p) => p.slug !== slug).slice(0, 2 - related.length);
   const relatedAll = [...related, ...fallback];
 
   return (
@@ -36,14 +43,16 @@ export default function BlogPost() {
           </Link>
           <p className="overline-tag mt-8">{post.category}</p>
           <h1 className="mt-3 font-heading text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl" data-testid="post-title">{post.title}</h1>
-          <p className="mt-4 text-sm text-muted-foreground">{post.author} · {post.date} · {post.readTime}</p>
+          <p className="mt-4 text-sm text-muted-foreground">{post.author} · {new Date(post.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" })} · {post.read_time}</p>
         </Reveal>
         <Reveal delay={0.1} className="mt-8">
-          <img src={post.image} alt={post.title} className="aspect-[16/8] w-full rounded-3xl border border-border object-cover" />
+          {post.image && (
+            <img src={post.image} alt={post.title} className="aspect-[16/8] w-full rounded-3xl border border-border object-cover" />
+          )}
         </Reveal>
         <Reveal delay={0.15} className="mt-10">
           <div className="grid gap-6 text-base leading-relaxed text-muted-foreground" data-testid="post-body">
-            {post.body.map((para, i) => (
+            {post.body.split("\n\n").map((para, i) => (
               <p key={i}>{para}</p>
             ))}
           </div>

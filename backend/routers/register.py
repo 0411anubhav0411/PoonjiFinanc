@@ -1,9 +1,12 @@
+import asyncio
+
 from fastapi import APIRouter, HTTPException, Response
 
 from lib.db import db
 from lib.mail import create_notification, notify_admins
 from lib.security import create_token, hash_password, new_id, utcnow
 from models.schemas import CustomerRegister, PartnerRegister
+from routers.account import issue_verification
 
 router = APIRouter(tags=["auth"])
 
@@ -33,11 +36,13 @@ async def register_customer(body: CustomerRegister, response: Response):
         "mobile": data.pop("mobile"),
         "password_hash": hash_password(data.pop("password")),
         "partner_status": None,
+        "email_verified": False,
         "profile": {k: v for k, v in data.items() if v},
         "created_at": utcnow(),
     }
     await db.users.insert_one(user)
     set_auth_cookie(response, user)
+    asyncio.create_task(issue_verification(email))
     await create_notification(
         user["id"],
         "Welcome to Poonji Finance",
@@ -60,6 +65,7 @@ async def register_partner(body: PartnerRegister):
         "mobile": data.pop("mobile"),
         "password_hash": hash_password(data.pop("password")),
         "partner_status": "pending",
+        "email_verified": False,
         "profile": {k: v for k, v in data.items() if v},
         "created_at": utcnow(),
     }

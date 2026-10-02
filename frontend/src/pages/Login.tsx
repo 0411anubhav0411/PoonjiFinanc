@@ -73,6 +73,11 @@ export default function Login() {
         <form onSubmit={submit} className="glass-card mt-6 grid gap-4 rounded-3xl p-6 sm:p-8" data-testid="login-form">
           <Input data-testid="login-email" type="email" required placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-secondary/60" />
           <Input data-testid="login-password" type="password" required placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="bg-secondary/60" />
+          <div className="text-right">
+            <Link to="/forgot-password" data-testid="login-forgot" className="text-xs font-medium text-blue-800 hover:text-blue-600">
+              Forgot password?
+            </Link>
+          </div>
           {error && <p data-testid="login-error" className="text-sm text-red-600">{error}</p>}
           <Button data-testid="login-submit" type="submit" size="lg" disabled={loading}>
             {loading ? "Signing in…" : "Sign In"}

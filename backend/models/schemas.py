@@ -134,3 +134,29 @@ class UpdateIn(BaseModel):
     source: str | None = None
     important: bool = False
     published: bool = True
+
+
+class EmailIn(BaseModel):
+    email: EmailStr
+
+
+class VerifyEmailIn(BaseModel):
+    email: EmailStr
+    code: str = Field(min_length=6, max_length=6)
+
+
+class ResetPasswordIn(BaseModel):
+    token: str = Field(min_length=10)
+    password: str = Field(min_length=8, max_length=128)
+
+
+class BlogIn(BaseModel):
+    title: str = Field(min_length=2, max_length=200)
+    slug: str = Field(min_length=2, max_length=120)
+    category: str = Field(min_length=2, max_length=60)
+    excerpt: str = Field(min_length=2, max_length=400)
+    body: str = Field(min_length=2)
+    author: str = "Team Poonji"
+    read_time: str = "5 min read"
+    image: str | None = None
+    published: bool = True

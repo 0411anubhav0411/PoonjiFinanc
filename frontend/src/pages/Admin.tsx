@@ -13,6 +13,7 @@ import { CustomersTab } from "@/components/admin/CustomersTab";
 import { PartnersTab } from "@/components/admin/PartnersTab";
 import { RatesTab } from "@/components/admin/RatesTab";
 import { UpdatesTab } from "@/components/admin/UpdatesTab";
+import { BlogTab } from "@/components/admin/BlogTab";
 
 interface AdminUser {
   id: string;
@@ -227,12 +228,14 @@ export default function Admin() {
           <TabsTrigger value="partners" data-testid="admin-tab-partners">Partners</TabsTrigger>
           <TabsTrigger value="rates" data-testid="admin-tab-rates">Rates</TabsTrigger>
           <TabsTrigger value="updates" data-testid="admin-tab-updates">Updates</TabsTrigger>
+          <TabsTrigger value="blog" data-testid="admin-tab-blog">Blog</TabsTrigger>
         </TabsList>
         <TabsContent value="overview" className="mt-6"><OverviewTab /></TabsContent>
         <TabsContent value="customers" className="mt-6"><CustomersTab /></TabsContent>
         <TabsContent value="partners" className="mt-6"><PartnersTab /></TabsContent>
         <TabsContent value="rates" className="mt-6"><RatesTab /></TabsContent>
         <TabsContent value="updates" className="mt-6"><UpdatesTab /></TabsContent>
+        <TabsContent value="blog" className="mt-6"><BlogTab /></TabsContent>
         <TabsContent value="leads" className="mt-6">
           <Tabs defaultValue="enquiries">
             <TabsList variant="line">

@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { apiGet } from "@/lib/api";
 import { Reveal } from "@/components/Reveal";
 import { Input } from "@/components/ui/input";
-import { BLOG_POSTS } from "@/data/content";
+import type { BlogPostItem } from "@/lib/types";
 import { useSeo } from "@/lib/seo";
-
-const CATEGORIES = ["All", ...Array.from(new Set(BLOG_POSTS.map((p) => p.category)))];
 
 export default function Blog() {
   useSeo("Blog — Poonji Finance", "Plain-language insights on loans, insurance, mutual funds, deposits and personal finance from the Poonji Finance team.");
   const [cat, setCat] = useState("All");
   const [q, setQ] = useState("");
-  const posts = BLOG_POSTS.filter(
+  const postsQ = useQuery({ queryKey: ["blog"], queryFn: () => apiGet<BlogPostItem[]>("/blog") });
+  const categories = ["All", ...Array.from(new Set((postsQ.data ?? []).map((p) => p.category)))];
+  const posts = (postsQ.data ?? []).filter(
     (p) =>
       (cat === "All" || p.category === cat) &&
       (q === "" || p.title.toLowerCase().includes(q.toLowerCase()) || p.excerpt.toLowerCase().includes(q.toLowerCase()))
@@ -37,7 +39,7 @@ export default function Blog() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap gap-2" data-testid="blog-filters">
-            {CATEGORIES.map((c) => (
+            {categories.map((c) => (
               <button
                 key={c}
                 data-testid={`blog-filter-${c.toLowerCase().replace(/\s+/g, "-")}`}
@@ -66,14 +68,16 @@ export default function Blog() {
         {featured && (
           <Reveal className="mt-12">
             <Link to={`/blog/${featured.slug}`} data-testid="blog-featured" className="group grid overflow-hidden rounded-3xl border border-border bg-card transition-colors hover:border-blue-600/60 lg:grid-cols-2">
-              <div className="overflow-hidden">
-                <img src={featured.image} alt={featured.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-              </div>
+              {featured.image && (
+                <div className="overflow-hidden">
+                  <img src={featured.image} alt={featured.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                </div>
+              )}
               <div className="flex flex-col justify-center p-8 sm:p-10">
                 <p className="overline-tag">Featured · {featured.category}</p>
                 <h2 className="mt-3 font-heading text-2xl font-bold leading-snug sm:text-3xl">{featured.title}</h2>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">{featured.excerpt}</p>
-                <p className="mt-6 text-xs text-muted-foreground/70">{featured.author} · {featured.date} · {featured.readTime}</p>
+                <p className="mt-6 text-xs text-muted-foreground/70">{featured.author} · {new Date(featured.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })} · {featured.read_time}</p>
               </div>
             </Link>
           </Reveal>
@@ -83,14 +87,16 @@ export default function Blog() {
           {rest.map((p, i) => (
             <Reveal key={p.slug} delay={i * 0.05}>
               <Link to={`/blog/${p.slug}`} data-testid={`blog-card-${p.slug}`} className="group block h-full overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-blue-600/60">
-                <div className="overflow-hidden">
-                  <img src={p.image} alt={p.title} className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                </div>
+                {p.image && (
+                  <div className="overflow-hidden">
+                    <img src={p.image} alt={p.title} className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  </div>
+                )}
                 <div className="p-6">
                   <p className="overline-tag">{p.category}</p>
                   <h3 className="mt-2 font-heading text-lg font-bold leading-snug">{p.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{p.excerpt}</p>
-                  <p className="mt-4 text-xs text-muted-foreground/70">{p.author} · {p.date} · {p.readTime}</p>
+                  <p className="mt-4 text-xs text-muted-foreground/70">{p.author} · {new Date(p.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })} · {p.read_time}</p>
                 </div>
               </Link>
             </Reveal>

@@ -58,6 +58,13 @@ export default function Portal() {
         </div>
       </div>
 
+      {me.data.email_verified === false && (
+        <div className="mt-6 rounded-2xl border border-amber-500/40 bg-amber-500/10 px-5 py-4 text-sm text-amber-800" data-testid="portal-verify-banner">
+          Please verify your email to secure your account — check your inbox for the 6-digit code.{" "}
+          <Link to={`/verify-email?email=${encodeURIComponent(me.data.email)}`} className="font-semibold underline">Verify now</Link>
+        </div>
+      )}
+
       <Tabs defaultValue="profile" className="mt-8">
         <TabsList variant="line" className="flex h-auto w-full flex-wrap justify-start gap-x-6">
           <TabsTrigger value="profile" data-testid="portal-tab-profile">Profile</TabsTrigger>

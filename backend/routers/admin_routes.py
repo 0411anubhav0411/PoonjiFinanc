@@ -8,6 +8,7 @@ from lib.security import new_id, require_role, utcnow
 from models.schemas import (
     APP_STATUSES,
     ApplicationStatusUpdate,
+    BlogIn,
     DocStatusUpdate,
     NoteCreate,
     PartnerStatusUpdate,
@@ -180,4 +181,38 @@ async def delete_update(update_id: str, user=admin):
     res = await db.updates.delete_one({"id": update_id})
     if res.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Update not found")
+    return {"ok": True}
+
+
+@router.get("/admin/blog")
+async def admin_blog(user=admin):
+    return await db.blog_posts.find({}, {"_id": 0}).sort("created_at", -1).to_list(300)
+
+
+@router.post("/admin/blog", status_code=201)
+async def create_blog_post(body: BlogIn, user=admin):
+    if await db.blog_posts.find_one({"slug": body.slug}):
+        raise HTTPException(status_code=409, detail="A post with this slug already exists")
+    doc = {"id": new_id(), **body.model_dump(), "created_at": utcnow()}
+    await db.blog_posts.insert_one(doc)
+    doc.pop("_id", None)
+    return doc
+
+
+@router.patch("/admin/blog/{post_id}")
+async def edit_blog_post(post_id: str, body: BlogIn, user=admin):
+    existing = await db.blog_posts.find_one({"slug": body.slug, "id": {"$ne": post_id}})
+    if existing:
+        raise HTTPException(status_code=409, detail="A post with this slug already exists")
+    res = await db.blog_posts.update_one({"id": post_id}, {"$set": body.model_dump()})
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Post not found")
+    return {"ok": True}
+
+
+@router.delete("/admin/blog/{post_id}")
+async def delete_blog_post(post_id: str, user=admin):
+    res = await db.blog_posts.delete_one({"id": post_id})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Post not found")
     return {"ok": True}

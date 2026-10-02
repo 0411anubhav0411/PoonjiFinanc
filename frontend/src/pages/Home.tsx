@@ -1,5 +1,8 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { apiGet } from "@/lib/api";
+import type { BlogPostItem } from "@/lib/types";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, BadgeCheck, Calculator, PhoneCall, ShieldCheck, Timer } from "lucide-react";
 import { Marquee } from "@/components/Marquee";
@@ -63,6 +66,7 @@ export default function Home() {
     "Poonji Finance — One Platform. Multiple Financial Solutions.",
     "Loans, insurance, fixed deposits and mutual funds facilitated transparently across 45+ banks, NBFCs, insurers and investment platforms."
   );
+  const blogQ = useQuery({ queryKey: ["blog"], queryFn: () => apiGet<BlogPostItem[]>("/blog") });
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
@@ -248,17 +252,19 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
           <SectionHead overline="From the Blog" title="Finance, explained in plain language" />
           <div className="mt-14 grid gap-4 md:grid-cols-3" data-testid="blog-teaser">
-            {BLOG_POSTS.slice(0, 3).map((p, i) => (
+            {(blogQ.data ?? []).slice(0, 3).map((p, i) => (
               <Reveal key={p.slug} delay={i * 0.07}>
                 <Link to={`/blog/${p.slug}`} data-testid={`blog-teaser-${p.slug}`} className="group block overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-blue-600/60">
-                  <div className="overflow-hidden">
-                    <img src={p.image} alt={p.title} className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                  </div>
+                  {p.image && (
+                    <div className="overflow-hidden">
+                      <img src={p.image} alt={p.title} className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                    </div>
+                  )}
                   <div className="p-6">
                     <p className="overline-tag">{p.category}</p>
                     <h3 className="mt-2 font-heading text-lg font-bold leading-snug">{p.title}</h3>
                     <p className="mt-2 text-sm text-muted-foreground">{p.excerpt}</p>
-                    <p className="mt-4 text-xs text-muted-foreground/70">{p.readTime}</p>
+                    <p className="mt-4 text-xs text-muted-foreground/70">{p.read_time}</p>
                   </div>
                 </Link>
               </Reveal>

@@ -39,3 +39,18 @@ async def public_partners(q: str | None = None, city: str | None = None, categor
 @router.get("/updates")
 async def public_updates():
     return await db.updates.find({"published": True}, {"_id": 0}).sort("created_at", -1).to_list(100)
+
+
+@router.get("/blog")
+async def public_blog():
+    return await db.blog_posts.find({"published": True}, {"_id": 0}).sort("created_at", -1).to_list(100)
+
+
+@router.get("/blog/{slug}")
+async def public_blog_post(slug: str):
+    from fastapi import HTTPException
+
+    post = await db.blog_posts.find_one({"slug": slug, "published": True}, {"_id": 0})
+    if not post:
+        raise HTTPException(status_code=404, detail="Post not found")
+    return post

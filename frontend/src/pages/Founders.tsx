@@ -28,11 +28,15 @@ export default function Founders() {
           {FOUNDERS.map((f, i) => (
             <Reveal key={f.name} delay={i * 0.1}>
               <article className="overflow-hidden rounded-3xl border border-border bg-card">
-                <div className="relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-100 via-card to-background py-14">
+                <div className="relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-100 via-card to-background">
                   <div className="absolute inset-0 opacity-40 [background:radial-gradient(circle_at_50%_120%,rgba(212,175,55,0.15),transparent_60%)]" />
-                  <span className="relative flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-600 to-[#B08A1E] font-heading text-3xl font-extrabold text-white shadow-xl shadow-blue-900/10">
-                    {f.initials}
-                  </span>
+                  {f.image ? (
+                    <img src={f.image} alt={`${f.name}, ${f.role}`} className="relative aspect-[4/3] w-full object-cover object-top" loading="lazy" />
+                  ) : (
+                    <span className="relative my-14 flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-600 to-[#B08A1E] font-heading text-3xl font-extrabold text-white shadow-xl shadow-blue-900/10">
+                      {f.initials}
+                    </span>
+                  )}
                 </div>
                 <div className="border-t border-border px-6 pt-5 sm:px-8">
                   <h2 className="font-heading text-2xl font-bold">{f.name}</h2>

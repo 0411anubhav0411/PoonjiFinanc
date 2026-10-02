@@ -50,7 +50,7 @@ export default function Signup() {
       });
       queryClient.setQueryData(["auth-me"], user);
       toast.success("Account created — welcome to Poonji Finance");
-      navigate("/portal");
+      navigate(`/verify-email?email=${encodeURIComponent(customer.email)}`);
     } catch (err) {
       setError(err instanceof Error && "status" in err && (err as { status: number }).status === 409
         ? "An account with this email already exists"

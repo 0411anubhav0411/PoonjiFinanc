@@ -21,7 +21,7 @@ from lib.db import client, db, ensure_indexes
 logger = logging.getLogger(__name__)
 JWT_ALGORITHM = "HS256"
 
-from lib.security import create_token, get_current_admin, hash_password, verify_password
+from lib.security import create_token, get_current_admin, get_current_user, hash_password, verify_password
 from lib.mail import notify_new_lead
 from lib.storage import init_storage
 from routers.register import router as register_router
@@ -118,6 +118,8 @@ class AdminUser(BaseModel):
     email: str
     name: str
     role: str
+    partner_status: str | None = None
+    email_verified: bool | None = None
 
 
 @api_router.get("/")
@@ -204,8 +206,8 @@ async def logout(response: Response):
 
 
 @api_router.get("/auth/me", response_model=AdminUser)
-async def me(admin: dict = Depends(get_current_admin)):
-    return AdminUser(**admin)
+async def me(user: dict = Depends(get_current_user)):
+    return AdminUser(**user)
 
 
 class StatusUpdate(BaseModel):
@@ -238,6 +240,9 @@ api_router.include_router(register_router)
 api_router.include_router(portal_router)
 api_router.include_router(admin_routes_router)
 api_router.include_router(public_router)
+
+from routers.account import router as account_router
+api_router.include_router(account_router)
 
 app.include_router(api_router)
 

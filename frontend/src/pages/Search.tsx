@@ -6,7 +6,7 @@ import { apiGet } from "@/lib/api";
 import { Input } from "@/components/ui/input";
 import { useSeo } from "@/lib/seo";
 import { BLOG_POSTS, FAQS, GUIDES, SERVICE_VERTICALS } from "@/data/content";
-import type { FinanceUpdate, PartnerPublic, Rate } from "@/lib/types";
+import type { BlogPostItem, FinanceUpdate, PartnerPublic, Rate } from "@/lib/types";
 
 const CALCULATORS = [
   { name: "Loan EMI Calculator", path: "/calculators" },
@@ -41,6 +41,7 @@ export default function Search() {
   const rates = useQuery({ queryKey: ["search-rates"], queryFn: () => apiGet<Rate[]>("/rates"), enabled: active });
   const partners = useQuery({ queryKey: ["search-partners"], queryFn: () => apiGet<PartnerPublic[]>("/partners"), enabled: active });
   const updates = useQuery({ queryKey: ["search-updates"], queryFn: () => apiGet<FinanceUpdate[]>("/updates"), enabled: active });
+  const blog = useQuery({ queryKey: ["search-blog"], queryFn: () => apiGet<BlogPostItem[]>("/blog"), enabled: active });
 
   const groups: ResultGroup[] = !active
     ? []
@@ -65,7 +66,7 @@ export default function Search() {
         },
         {
           title: "Blog",
-          items: BLOG_POSTS.filter((b) => hit(query, b.title, b.excerpt, b.category)).map((b) => ({
+          items: (blog.data ?? []).filter((b) => hit(query, b.title, b.excerpt, b.category)).map((b) => ({
             label: b.title, sub: b.excerpt, path: `/blog/${b.slug}`, testid: `search-blog-${b.slug}`,
           })),
         },
