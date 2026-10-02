@@ -12,6 +12,14 @@ import BlogPost from "@/pages/BlogPost";
 import Faq from "@/pages/Faq";
 import Contact from "@/pages/Contact";
 import Careers from "@/pages/Careers";
+import Login from "@/pages/Login";
+import Signup from "@/pages/Signup";
+import Portal from "@/pages/Portal";
+import PartnerPortal from "@/pages/PartnerPortal";
+import Partners from "@/pages/Partners";
+import Rates from "@/pages/Rates";
+import Updates from "@/pages/Updates";
+import Search from "@/pages/Search";
 import Legal from "@/pages/Legal";
 import Admin from "@/pages/Admin";
 import NotFound from "@/pages/NotFound";
@@ -27,6 +35,14 @@ export default function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/calculators" element={<Calculators />} />
         <Route path="/careers" element={<Careers />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/portal" element={<Portal />} />
+        <Route path="/partner-portal" element={<PartnerPortal />} />
+        <Route path="/partners" element={<Partners />} />
+        <Route path="/rates" element={<Rates />} />
+        <Route path="/updates" element={<Updates />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/blog" element={<Blog />} />

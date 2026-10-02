@@ -47,7 +47,7 @@ export default function Calculators() {
           <Reveal>
             <p className="overline-tag">Financial Tools</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              Run the numbers <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">before you sign anything</span>
+              Run the numbers <span className="bg-gradient-to-r from-blue-500 to-[#B08A1E] bg-clip-text text-transparent">before you sign anything</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Sixteen interactive calculators for loans, deposits, investments and life goals — live results as you drag. Free, instant, no sign-up.
@@ -79,7 +79,7 @@ export default function Calculators() {
         </Reveal>
 
         <Reveal className="mt-14">
-          <div className="flex flex-col items-center gap-6 rounded-3xl border border-blue-600/30 bg-gradient-to-r from-blue-950/60 to-cyan-950/40 p-10 text-center">
+          <div className="flex flex-col items-center gap-6 rounded-3xl border border-blue-600/30 bg-gradient-to-r from-blue-100/80 to-amber-100/50 p-10 text-center">
             <h2 className="font-heading text-2xl font-bold sm:text-3xl">Like the numbers? Let's make them real.</h2>
             <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
               Share your requirement and we'll match it against live offers from 45+ partner institutions.

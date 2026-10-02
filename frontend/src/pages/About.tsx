@@ -23,7 +23,7 @@ export default function About() {
           <Reveal>
             <p className="overline-tag">About Us</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              Finance is complicated. <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">Accessing it shouldn't be.</span>
+              Finance is complicated. <span className="bg-gradient-to-r from-blue-500 to-[#B08A1E] bg-clip-text text-transparent">Accessing it shouldn't be.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Poonji Finance is a financial services facilitation and distribution platform. We exist because capable people — salaried professionals, business owners, families — routinely get lost between fifty lenders, a hundred schemes and a thousand pages of fine print. We make the market legible, then walk the process with you.

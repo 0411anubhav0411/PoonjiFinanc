@@ -14,7 +14,7 @@ export default function Founders() {
           <Reveal>
             <p className="overline-tag">Our Founders</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              The people behind <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">Poonji</span>
+              The people behind <span className="bg-gradient-to-r from-blue-500 to-[#B08A1E] bg-clip-text text-transparent">Poonji</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               A founding family with decades of combined experience across banking, insurance and operations — and one shared conviction: customers deserve someone on their side of the table.
@@ -28,9 +28,9 @@ export default function Founders() {
           {FOUNDERS.map((f, i) => (
             <Reveal key={f.name} delay={i * 0.1}>
               <article className="overflow-hidden rounded-3xl border border-border bg-card">
-                <div className="relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-950/80 via-card to-background py-14">
+                <div className="relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-100 via-card to-background py-14">
                   <div className="absolute inset-0 opacity-40 [background:radial-gradient(circle_at_50%_120%,rgba(212,175,55,0.15),transparent_60%)]" />
-                  <span className="relative flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-600 to-[#D4AF37] font-heading text-3xl font-extrabold text-white shadow-xl shadow-blue-950/50">
+                  <span className="relative flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-600 to-[#B08A1E] font-heading text-3xl font-extrabold text-white shadow-xl shadow-blue-900/10">
                     {f.initials}
                   </span>
                 </div>

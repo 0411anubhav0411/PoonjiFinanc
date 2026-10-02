@@ -1,0 +1,73 @@
+import os
+import uuid
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+import bcrypt
+import jwt
+from dotenv import load_dotenv
+from fastapi import HTTPException, Request
+
+load_dotenv(Path(__file__).parent.parent / ".env")
+
+JWT_ALGORITHM = "HS256"
+
+
+def hash_password(password: str) -> str:
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+
+def verify_password(password: str, hashed: str) -> bool:
+    return bcrypt.checkpw(password.encode("utf-8"), hashed.encode("utf-8"))
+
+
+def create_token(user_id: str, email: str, role: str) -> str:
+    payload = {
+        "sub": user_id,
+        "email": email,
+        "role": role,
+        "type": "access",
+        "exp": datetime.now(timezone.utc) + timedelta(hours=12),
+    }
+    return jwt.encode(payload, os.environ["JWT_SECRET"], algorithm=JWT_ALGORITHM)
+
+
+def new_id() -> str:
+    return str(uuid.uuid4())
+
+
+def utcnow() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+async def get_current_user(request: Request) -> dict:
+    from lib.db import db
+
+    token = request.cookies.get("access_token")
+    if not token:
+        auth = request.headers.get("Authorization", "")
+        if auth.startswith("Bearer "):
+            token = auth[7:]
+    if not token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    try:
+        payload = jwt.decode(token, os.environ["JWT_SECRET"], algorithms=[JWT_ALGORITHM])
+    except jwt.PyJWTError:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+    user = await db.users.find_one({"id": payload["sub"]}, {"_id": 0, "password_hash": 0})
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+    return user
+
+
+def require_role(*roles: str):
+    async def dep(request: Request) -> dict:
+        user = await get_current_user(request)
+        if user.get("role") not in roles:
+            raise HTTPException(status_code=403, detail="Insufficient permissions")
+        return user
+
+    return dep
+
+
+get_current_admin = require_role("admin")

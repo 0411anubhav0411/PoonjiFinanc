@@ -38,6 +38,11 @@ export function Footer({ onCallback }: { onCallback: () => void }) {
               <li><Link data-testid="footer-resources" to="/resources" className="transition-colors hover:text-gold">Resources</Link></li>
               <li><Link data-testid="footer-blog" to="/blog" className="transition-colors hover:text-gold">Blog</Link></li>
               <li><Link data-testid="footer-faqs" to="/faqs" className="transition-colors hover:text-gold">FAQs</Link></li>
+              <li><Link data-testid="footer-rates" to="/rates" className="transition-colors hover:text-gold">Interest Rates</Link></li>
+              <li><Link data-testid="footer-partners" to="/partners" className="transition-colors hover:text-gold">Partner Directory</Link></li>
+              <li><Link data-testid="footer-updates" to="/updates" className="transition-colors hover:text-gold">Finance Updates</Link></li>
+              <li><Link data-testid="footer-careers" to="/careers" className="transition-colors hover:text-gold">Careers</Link></li>
+              <li><Link data-testid="footer-login" to="/login" className="transition-colors hover:text-gold">Login / Sign Up</Link></li>
             </ul>
           </div>
           <div>

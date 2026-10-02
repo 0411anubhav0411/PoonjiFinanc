@@ -18,7 +18,7 @@ export default function Contact() {
           <Reveal>
             <p className="overline-tag">Contact Us</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              Talk to a human, <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">not a bot</span>
+              Talk to a human, <span className="bg-gradient-to-r from-blue-500 to-[#B08A1E] bg-clip-text text-transparent">not a bot</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Call, WhatsApp, email or drop an enquiry — every route lands with a real advisor.

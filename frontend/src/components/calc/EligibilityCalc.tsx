@@ -35,7 +35,7 @@ export function EligibilityCalc() {
           <ResultRow testid="elig-emi" label="Max Comfortable EMI (50% FOIR)" value={formatINR(maxEmi)} />
           <ResultRow testid="elig-profile" label="Profile" value={employment} />
         </div>
-        <p className="mt-6 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-xs leading-relaxed text-amber-300/90" data-testid="elig-disclaimer">
+        <p className="mt-6 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-xs leading-relaxed text-amber-800" data-testid="elig-disclaimer">
           This is an indicative estimate only, assuming ~50% FOIR. Actual eligibility depends on credit score, employer/business profile, existing obligations and each lender's policy. Final approval rests solely with the lending institution.
         </p>
       </div>

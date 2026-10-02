@@ -26,7 +26,7 @@ export default function Services() {
           <Reveal>
             <p className="overline-tag">Our Services</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              Every financial product you'll need, <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">facilitated properly</span>
+              Every financial product you'll need, <span className="bg-gradient-to-r from-blue-500 to-[#B08A1E] bg-clip-text text-transparent">facilitated properly</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Loans, insurance, deposits and investments — compared across 45+ partner institutions and processed with you, end to end. New products are added as our partner network grows.
@@ -49,7 +49,7 @@ export default function Services() {
                 <ul className="mt-5 grid gap-2.5">
                   {s.points.map((p) => (
                     <li key={p} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
                       {p}
                     </li>
                   ))}

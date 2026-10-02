@@ -8,6 +8,11 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useSeo } from "@/lib/seo";
+import { OverviewTab } from "@/components/admin/OverviewTab";
+import { CustomersTab } from "@/components/admin/CustomersTab";
+import { PartnersTab } from "@/components/admin/PartnersTab";
+import { RatesTab } from "@/components/admin/RatesTab";
+import { UpdatesTab } from "@/components/admin/UpdatesTab";
 
 interface AdminUser {
   id: string;
@@ -56,8 +61,8 @@ interface Leads {
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  new: "border-blue-500/40 bg-blue-500/10 text-blue-300",
-  contacted: "border-amber-500/40 bg-amber-500/10 text-amber-300",
+  new: "border-blue-500/40 bg-blue-500/10 text-blue-700",
+  contacted: "border-amber-500/40 bg-amber-500/10 text-amber-700",
   closed: "border-emerald-500/40 bg-emerald-500/10 text-emerald-300",
 };
 
@@ -165,7 +170,7 @@ export default function Admin() {
           <form onSubmit={login} className="mt-8 grid gap-4" data-testid="admin-login-form">
             <Input data-testid="admin-email" type="email" required placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-secondary/60" />
             <Input data-testid="admin-password" type="password" required placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="bg-secondary/60" />
-            {loginError && <p data-testid="admin-login-error" className="text-sm text-red-400">{loginError}</p>}
+            {loginError && <p data-testid="admin-login-error" className="text-sm text-red-600">{loginError}</p>}
             <Button data-testid="admin-login-submit" type="submit" disabled={loggingIn}>
               {loggingIn ? "Signing in…" : "Sign In"}
             </Button>
@@ -214,8 +219,23 @@ export default function Admin() {
         </div>
       </div>
 
-      <Tabs defaultValue="enquiries" className="mt-10">
-        <TabsList variant="line">
+      <Tabs defaultValue="overview" className="mt-10">
+        <TabsList variant="line" className="flex h-auto w-full flex-wrap justify-start gap-x-6">
+          <TabsTrigger value="overview" data-testid="admin-tab-overview">Overview</TabsTrigger>
+          <TabsTrigger value="leads" data-testid="admin-tab-leads">Leads</TabsTrigger>
+          <TabsTrigger value="customers" data-testid="admin-tab-customers">Customers</TabsTrigger>
+          <TabsTrigger value="partners" data-testid="admin-tab-partners">Partners</TabsTrigger>
+          <TabsTrigger value="rates" data-testid="admin-tab-rates">Rates</TabsTrigger>
+          <TabsTrigger value="updates" data-testid="admin-tab-updates">Updates</TabsTrigger>
+        </TabsList>
+        <TabsContent value="overview" className="mt-6"><OverviewTab /></TabsContent>
+        <TabsContent value="customers" className="mt-6"><CustomersTab /></TabsContent>
+        <TabsContent value="partners" className="mt-6"><PartnersTab /></TabsContent>
+        <TabsContent value="rates" className="mt-6"><RatesTab /></TabsContent>
+        <TabsContent value="updates" className="mt-6"><UpdatesTab /></TabsContent>
+        <TabsContent value="leads" className="mt-6">
+          <Tabs defaultValue="enquiries">
+            <TabsList variant="line">
           <TabsTrigger value="enquiries" data-testid="admin-tab-enquiries">
             Enquiries ({leads.data?.enquiries.length ?? 0})
           </TabsTrigger>
@@ -324,6 +344,8 @@ export default function Admin() {
               </TableBody>
             </Table>
           </div>
+        </TabsContent>
+          </Tabs>
         </TabsContent>
       </Tabs>
     </div>

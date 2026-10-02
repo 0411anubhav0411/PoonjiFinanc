@@ -54,20 +54,34 @@ Build a modern, premium, trustworthy multi-page website for Poonji Finance, an I
 - sitemap.xml / robots.txt / /careers return 200 on public URL; yarn typecheck clean.
 - Backend restarted with new email env; lead alert recipient now the real inbox.
 
-## Implemented (2026-10-02, round 4)
-- Job application pipeline: Careers "Apply Now" buttons open a proper application form (name, email, mobile, note) → POST /api/applications → MongoDB + instant email alert to info@poonjifinance.com. Admin dashboard has a third Applications tab with status pills (New/Contacted/Closed) and CSV export.
+## Implemented (2026-10-02, round 5 — three-portal platform + light retheme)
+- Full white/light redesign: white background, dark navy (#0E1B33) typography, dark blue (#1E40AF) primary, gold accents; logo palette retained.
+- 3-role auth (admin/customer/partner) — JWT cookie, role-based access (403 across roles verified). /login with role selector, /signup with customer + partner forms.
+- Customer portal (/portal): profile editor (KYC fields), Document Vault (category → type → upload, object storage, 10MB PDF/JPG/PNG, statuses), Applications (create + 8-stage status stepper), Notifications.
+- Partner portal (/partner-portal): profile editor, approval status banner. Partner signup → pending until admin approves.
+- Public: /partners directory (approved only, search/filter, approved-partner badge + disclaimer), /rates (6 loan categories, admin-managed, last-updated dates, 16 seeded sample rates), /updates (finance news feed, 3 seeded), /search (services, rates, calculators, blogs, guides, FAQs, partners, updates).
+- Admin dashboard v2 (/admin): Overview cards, Leads (enquiries/callbacks/job applications), Customers (file view: profile/KYC, documents verify/reject with note → customer notified, application status pipeline, internal notes, matched enquiries), Partners (approve/reject/suspend), Rates CRUD, Updates CRUD.
+- Notifications: in-dashboard, fired on signup, document status change, application status change, partner status change.
 
-## Verified (round 4)
-- curl: application 201 with status=new, appears in /api/leads, status update persists, unauth 401, bad body 422.
-- Browser: submitted application via Careers dialog (toast with reference ID 035DBD41) and saw it in the admin Applications tab.
+## Verified (round 5)
+- curl chain: customer register → doc upload (object storage) → portal application → partner register (hidden publicly) → admin approve (visible publicly) → doc verify + app status + internal note → customer notifications (3) → admin doc download 200, stranger 401, customer-on-admin 403.
+- Browser: light home renders, signup → /portal redirect, rates table with last-updated, partner directory shows approved partner, updates feed.
+- yarn typecheck clean.
+
+## Deferred from the big brief (not built yet)
+- OTP/email verification at signup (needs SMS provider choice)
+- Blog CMS in admin (blog still seeded static content), page-content CMS, homepage banner management
+- SMS/WhatsApp notifications, password reset flow, admin activity logs
+- EMI-per-lakh column on rates, partner profile photo upload
 
 ## Backlog
 - P1: Founder photos + final bios from user
-- P1: Resume/CV file upload on applications (needs object storage integration)
-- P2: Blog CMS, analytics
-- P3: Customer portal, application tracking, document upload, CRM integration
+- P1: Password reset + email verification
+- P1: Blog CMS + page content management in admin
+- P2: CV upload on job applications, EMI/lakh on rates table
+- P3: CRM integration, e-sign, digital KYC providers
 
 ## Next Tasks
 1. Founder photos
-2. CV upload on job applications
-3. Blog CMS
+2. Password reset flow
+3. Blog/page CMS in admin

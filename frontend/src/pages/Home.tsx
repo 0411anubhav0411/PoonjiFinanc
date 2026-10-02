@@ -32,7 +32,7 @@ function EmiSandbox() {
   const [years, setYears] = useState(10);
   const monthly = emi(amount, 9.5, years);
   return (
-    <div className="glass-card float-slow rounded-3xl p-6 shadow-2xl shadow-blue-950/40 sm:p-8" data-testid="hero-emi-sandbox">
+    <div className="glass-card float-slow rounded-3xl p-6 shadow-2xl shadow-blue-900/10 sm:p-8" data-testid="hero-emi-sandbox">
       <div className="flex items-center justify-between">
         <p className="overline-tag">Live EMI Sandbox</p>
         <Calculator className="h-4 w-4 text-gold" />
@@ -82,8 +82,8 @@ export default function Home() {
             </motion.p>
             <h1 className="mt-6 font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl lg:text-6xl">
               <HeroLine i={0}>Your Financial</HeroLine>
-              <HeroLine i={1}>Goals. <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">Our</span></HeroLine>
-              <HeroLine i={2}><span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">Guidance.</span></HeroLine>
+              <HeroLine i={1}>Goals. <span className="bg-gradient-to-r from-blue-500 to-[#B08A1E] bg-clip-text text-transparent">Our</span></HeroLine>
+              <HeroLine i={2}><span className="bg-gradient-to-r from-blue-500 to-[#B08A1E] bg-clip-text text-transparent">Guidance.</span></HeroLine>
             </h1>
             <motion.p
               className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
@@ -112,9 +112,9 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.05, duration: 0.8 }}
             >
-              <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-emerald-400" /> Transparent facilitation</span>
-              <span className="flex items-center gap-2"><Timer className="h-4 w-4 text-emerald-400" /> 30-min callback pledge</span>
-              <span className="flex items-center gap-2"><PhoneCall className="h-4 w-4 text-emerald-400" /> Human advisors, not bots</span>
+              <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-emerald-600" /> Transparent facilitation</span>
+              <span className="flex items-center gap-2"><Timer className="h-4 w-4 text-emerald-600" /> 30-min callback pledge</span>
+              <span className="flex items-center gap-2"><PhoneCall className="h-4 w-4 text-emerald-600" /> Human advisors, not bots</span>
             </motion.div>
           </div>
           <motion.div style={{ y }} initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
@@ -137,7 +137,7 @@ export default function Home() {
               <Link
                 to="/services"
                 data-testid={`bento-${s.slug}`}
-                className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-blue-600/60 hover:shadow-lg hover:shadow-blue-950/50"
+                className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-blue-600/60 hover:shadow-lg hover:shadow-blue-900/10"
               >
                 <s.icon className="h-7 w-7 text-gold" />
                 <h3 className="mt-4 font-heading text-lg font-bold">{s.title}</h3>

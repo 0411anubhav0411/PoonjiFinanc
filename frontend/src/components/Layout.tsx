@@ -6,9 +6,12 @@ import { Menu, Phone } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Footer } from "@/components/Footer";
 import { CallbackDialog } from "@/components/CallbackDialog";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Toaster } from "@/components/ui/sonner";
+import { useQuery } from "@tanstack/react-query";
+import { apiGet } from "@/lib/api";
+import type { PortalUser } from "@/lib/types";
 import { CONTACT } from "@/data/content";
 
 const NAV = [
@@ -34,6 +37,14 @@ function ScrollToTop() {
 export default function Layout() {
   const [callbackOpen, setCallbackOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const me = useQuery({ queryKey: ["auth-me"], queryFn: () => apiGet<PortalUser>("/auth/me"), retry: false });
+  const dashboard = me.data
+    ? me.data.role === "admin"
+      ? "/admin"
+      : me.data.role === "partner"
+        ? "/partner-portal"
+        : "/portal"
+    : null;
 
   useEffect(() => {
     const lenis = new Lenis({ lerp: 0.11 });
@@ -79,6 +90,15 @@ export default function Layout() {
             >
               <Phone className="h-4 w-4" /> {CONTACT.phone}
             </a>
+            {me.data ? (
+              <Link to={dashboard ?? "/portal"} data-testid="nav-dashboard" className={`${buttonVariants({ variant: "outline", size: "sm" })} hidden sm:inline-flex`}>
+                My Portal
+              </Link>
+            ) : (
+              <Link to="/login" data-testid="nav-login" className={`${buttonVariants({ variant: "outline", size: "sm" })} hidden sm:inline-flex`}>
+                Login
+              </Link>
+            )}
             <Button data-testid="nav-callback" size="sm" onClick={() => setCallbackOpen(true)} className="hidden sm:inline-flex">
               Request Callback
             </Button>
@@ -106,6 +126,9 @@ export default function Layout() {
                     </Link>
                   ))}
                   <Link to="/founders" onClick={() => setMobileOpen(false)} data-testid="mobile-nav-founders" className="rounded-md px-3 py-2.5 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground">Our Founders</Link>
+                  <Link to={dashboard ?? "/login"} onClick={() => setMobileOpen(false)} data-testid="mobile-nav-login" className="rounded-md px-3 py-2.5 text-sm font-semibold text-blue-800">
+                    {me.data ? "My Portal" : "Login / Sign Up"}
+                  </Link>
                   <Button data-testid="mobile-nav-callback" className="mt-4" onClick={() => { setMobileOpen(false); setCallbackOpen(true); }}>
                     Request Callback
                   </Button>

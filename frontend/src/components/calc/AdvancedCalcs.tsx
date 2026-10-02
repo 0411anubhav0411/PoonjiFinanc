@@ -60,7 +60,7 @@ export function SwpCalc() {
           <ResultRow testid="swp-remaining" label="Remaining Value" value={formatINR(remaining)} />
         </div>
         {remaining === 0 && (
-          <p data-testid="swp-depleted" className="mt-4 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-2.5 text-xs text-amber-300/90">
+          <p data-testid="swp-depleted" className="mt-4 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-2.5 text-xs text-amber-800">
             At these settings the corpus depletes before {years} years. Lower the withdrawal or extend the horizon.
           </p>
         )}
@@ -209,8 +209,8 @@ export function RetirementCalc() {
           data-testid="ret-gap"
           className={`mt-5 rounded-lg border px-4 py-2.5 text-sm ${
             gap >= 0
-              ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400"
-              : "border-red-500/30 bg-red-500/10 text-red-300"
+              ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600"
+              : "border-red-500/30 bg-red-500/10 text-red-600"
           }`}
         >
           {gap >= 0

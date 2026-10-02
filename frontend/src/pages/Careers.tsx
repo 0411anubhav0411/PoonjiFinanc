@@ -42,7 +42,7 @@ export default function Careers() {
           <Reveal>
             <p className="overline-tag">Careers</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              Build a career on <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">honest finance</span>
+              Build a career on <span className="bg-gradient-to-r from-blue-500 to-[#B08A1E] bg-clip-text text-transparent">honest finance</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Poonji Finance is a young, founder-led firm with one non-negotiable: the customer comes first. If that sounds like a place you'd do your best work, we should talk.

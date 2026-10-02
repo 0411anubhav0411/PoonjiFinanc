@@ -17,7 +17,7 @@ export function SipCalc() {
         <SliderField testid="sip-return" label="Expected Return (% p.a.)" value={ret} min={4} max={20} step={0.5} onChange={setRet} format={(v) => `${v.toFixed(1)}%`} />
         <SliderField testid="sip-years" label="Duration (years)" value={years} min={1} max={35} onChange={setYears} format={(v) => `${v} yrs`} />
         {crore && (
-          <p data-testid="sip-crorepati" className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-2.5 text-sm text-emerald-400">
+          <p data-testid="sip-crorepati" className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-2.5 text-sm text-emerald-600">
             Crorepati milestone — your discipline crosses ₹1 Crore.
           </p>
         )}
