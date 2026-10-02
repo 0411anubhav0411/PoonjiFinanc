@@ -38,9 +38,21 @@ interface Callback {
   status?: string;
 }
 
+interface Application {
+  id: string;
+  name: string;
+  email: string;
+  mobile: string;
+  role: string;
+  message?: string | null;
+  created_at: string;
+  status?: string;
+}
+
 interface Leads {
   enquiries: Enquiry[];
   callbacks: Callback[];
+  applications: Application[];
 }
 
 const STATUS_STYLES: Record<string, string> = {
@@ -62,7 +74,7 @@ function downloadCsv(filename: string, rows: Record<string, unknown>[]) {
   URL.revokeObjectURL(url);
 }
 
-function StatusSelect({ kind, id, status }: { kind: "enquiries" | "callbacks"; id: string; status?: string }) {
+function StatusSelect({ kind, id, status }: { kind: "enquiries" | "callbacks" | "applications"; id: string; status?: string }) {
   const queryClient = useQueryClient();
   const value = status ?? "new";
   return (
@@ -186,6 +198,13 @@ export default function Admin() {
           >
             Callbacks CSV
           </Button>
+          <Button
+            data-testid="admin-export-applications"
+            variant="outline"
+            onClick={() => leads.data && downloadCsv("poonji-applications.csv", leads.data.applications as unknown as Record<string, unknown>[])}
+          >
+            Applications CSV
+          </Button>
           <Button data-testid="admin-refresh" variant="outline" onClick={() => leads.refetch()}>
             <RefreshCw className="h-4 w-4" /> Refresh
           </Button>
@@ -202,6 +221,9 @@ export default function Admin() {
           </TabsTrigger>
           <TabsTrigger value="callbacks" data-testid="admin-tab-callbacks">
             Callbacks ({leads.data?.callbacks.length ?? 0})
+          </TabsTrigger>
+          <TabsTrigger value="applications" data-testid="admin-tab-applications">
+            Applications ({leads.data?.applications.length ?? 0})
           </TabsTrigger>
         </TabsList>
         <TabsContent value="enquiries" className="mt-6">
@@ -265,6 +287,39 @@ export default function Admin() {
                 ))}
                 {leads.data && leads.data.callbacks.length === 0 && (
                   <TableRow><TableCell colSpan={6} className="py-10 text-center text-muted-foreground">No callback requests yet.</TableCell></TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
+        <TabsContent value="applications" className="mt-6">
+          <div className="overflow-hidden rounded-2xl border border-border bg-card" data-testid="admin-applications-table">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Ref</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Contact</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead>Note</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Received</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {(leads.data?.applications ?? []).map((a) => (
+                  <TableRow key={a.id}>
+                    <TableCell className="font-mono text-xs text-gold">{a.id.slice(0, 8).toUpperCase()}</TableCell>
+                    <TableCell className="font-medium">{a.name}</TableCell>
+                    <TableCell className="text-xs">{a.mobile}<br />{a.email}</TableCell>
+                    <TableCell>{a.role}</TableCell>
+                    <TableCell className="max-w-48 truncate text-xs text-muted-foreground">{a.message ?? "—"}</TableCell>
+                    <TableCell><StatusSelect kind="applications" id={a.id} status={a.status} /></TableCell>
+                    <TableCell className="text-xs text-muted-foreground">{fmtDate(a.created_at)}</TableCell>
+                  </TableRow>
+                ))}
+                {leads.data && leads.data.applications.length === 0 && (
+                  <TableRow><TableCell colSpan={7} className="py-10 text-center text-muted-foreground">No applications yet.</TableCell></TableRow>
                 )}
               </TableBody>
             </Table>

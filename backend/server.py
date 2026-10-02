@@ -237,6 +237,20 @@ class Callback(CallbackCreate):
     status: str = "new"
 
 
+class ApplicationCreate(BaseModel):
+    name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
+    mobile: str = Field(min_length=10, max_length=15)
+    role: str = Field(min_length=2, max_length=120)
+    message: str | None = None
+
+
+class Application(ApplicationCreate):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    status: str = "new"
+
+
 class LoginIn(BaseModel):
     email: EmailStr
     password: str
@@ -308,6 +322,24 @@ async def create_callback(body: CallbackCreate):
     return doc
 
 
+@api_router.post("/applications", response_model=Application, status_code=201)
+async def create_application(body: ApplicationCreate):
+    doc = Application(**body.model_dump())
+    await db.applications.insert_one(doc.model_dump())
+    asyncio.create_task(notify_new_lead(
+        f"New job application — {doc.role}",
+        [
+            ("Reference", doc.id[:8].upper()),
+            ("Name", doc.name),
+            ("Email", doc.email),
+            ("Mobile", doc.mobile),
+            ("Role", doc.role),
+            ("Note", doc.message or ""),
+        ],
+    ))
+    return doc
+
+
 @api_router.post("/auth/login", response_model=AdminUser)
 async def login(body: LoginIn, response: Response):
     user = await db.users.find_one({"email": body.email.lower()})
@@ -345,15 +377,17 @@ class StatusUpdate(BaseModel):
 async def leads(admin: dict = Depends(get_current_admin)):
     enquiries = await db.enquiries.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
     callbacks = await db.callbacks.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+    applications = await db.applications.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
     return {
         "enquiries": [Enquiry(**e) for e in enquiries],
         "callbacks": [Callback(**c) for c in callbacks],
+        "applications": [Application(**a) for a in applications],
     }
 
 
 @api_router.post("/leads/{kind}/{lead_id}/status")
 async def update_lead_status(kind: str, lead_id: str, body: StatusUpdate, admin: dict = Depends(get_current_admin)):
-    if kind not in ("enquiries", "callbacks"):
+    if kind not in ("enquiries", "callbacks", "applications"):
         raise HTTPException(status_code=404, detail="Unknown lead type")
     res = await db[kind].update_one({"id": lead_id}, {"$set": {"status": body.status}})
     if res.matched_count == 0:

@@ -54,12 +54,20 @@ Build a modern, premium, trustworthy multi-page website for Poonji Finance, an I
 - sitemap.xml / robots.txt / /careers return 200 on public URL; yarn typecheck clean.
 - Backend restarted with new email env; lead alert recipient now the real inbox.
 
+## Implemented (2026-10-02, round 4)
+- Job application pipeline: Careers "Apply Now" buttons open a proper application form (name, email, mobile, note) → POST /api/applications → MongoDB + instant email alert to info@poonjifinance.com. Admin dashboard has a third Applications tab with status pills (New/Contacted/Closed) and CSV export.
+
+## Verified (round 4)
+- curl: application 201 with status=new, appears in /api/leads, status update persists, unauth 401, bad body 422.
+- Browser: submitted application via Careers dialog (toast with reference ID 035DBD41) and saw it in the admin Applications tab.
+
 ## Backlog
 - P1: Founder photos + final bios from user
+- P1: Resume/CV file upload on applications (needs object storage integration)
 - P2: Blog CMS, analytics
 - P3: Customer portal, application tracking, document upload, CRM integration
 
 ## Next Tasks
 1. Founder photos
-2. Blog CMS
-3. Analytics
+2. CV upload on job applications
+3. Blog CMS

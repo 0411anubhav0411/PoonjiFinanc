@@ -3,6 +3,7 @@ import { Reveal, SectionHead } from "@/components/Reveal";
 import { buttonVariants } from "@/components/ui/button";
 import { useSeo } from "@/lib/seo";
 import { CONTACT } from "@/data/content";
+import { ApplicationDialog } from "@/components/ApplicationDialog";
 
 const ROLES = [
   {
@@ -84,13 +85,7 @@ export default function Careers() {
                     </p>
                     <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{r.desc}</p>
                   </div>
-                  <a
-                    data-testid={`careers-apply-${i}`}
-                    href={`mailto:${CONTACT.email}?subject=${encodeURIComponent(`Application: ${r.title}`)}`}
-                    className={`${buttonVariants({ variant: "outline" })} shrink-0`}
-                  >
-                    Apply Now <ArrowRight className="h-4 w-4" />
-                  </a>
+                  <ApplicationDialog role={r.title} index={i} />
                 </article>
               </Reveal>
             ))}

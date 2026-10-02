@@ -22,6 +22,7 @@ INDEXES: dict[str, list[IndexModel]] = {
     "users": [IndexModel([("email", ASCENDING)], name="email", unique=True)],
     "enquiries": [IndexModel([("created_at", DESCENDING)], name="created_desc")],
     "callbacks": [IndexModel([("created_at", DESCENDING)], name="created_desc")],
+    "applications": [IndexModel([("created_at", DESCENDING)], name="created_desc")],
 }
 
 
