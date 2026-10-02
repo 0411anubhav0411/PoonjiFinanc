@@ -50,6 +50,21 @@ async function request<T>(method: string, path: string, body?: JsonBody): Promis
 // TS interface here mirrors the endpoint's Pydantic model by hand — keep the two in sync.
 export const apiGet = <T>(path: string) => request<T>("GET", path);
 export const apiPost = <T>(path: string, body?: JsonBody) => request<T>("POST", path, body ?? null);
+export async function apiUpload<T>(path: string, formData: FormData): Promise<T> {
+  const res = await fetch(apiUrl(path), {
+    method: "POST",
+    credentials: "include",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const errBody = await res.json().catch(() => null);
+    throw new ApiError(res.status, errBody);
+  }
+
+  if (res.status === 204) return undefined as T;
+  return (await res.json()) as T;
+}
 export const apiPut = <T>(path: string, body?: JsonBody) => request<T>("PUT", path, body ?? null);
 export const apiPatch = <T>(path: string, body?: JsonBody) =>
   request<T>("PATCH", path, body ?? null);

@@ -94,6 +94,20 @@ class PortalApplicationCreate(BaseModel):
     notes: str | None = None
 
 
+class CareerApplicationCreate(BaseModel):
+    name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
+    application_type: Literal["internship", "full_time"]
+    message: str | None = Field(default=None, max_length=2000)
+
+
+class CareerApplication(CareerApplicationCreate):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    resume_path: str
+    resume_filename: str
+    submitted_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+
 class DocStatusUpdate(BaseModel):
     status: Literal["uploaded", "under_review", "verified", "rejected", "replacement_required"]
     note: str | None = None

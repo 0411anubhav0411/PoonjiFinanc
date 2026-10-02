@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { LogOut, RefreshCw } from "lucide-react";
-import { apiGet, apiPost } from "@/lib/api";
+import { apiGet, apiPost, apiUrl } from "@/lib/api";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -53,6 +53,17 @@ interface Application {
   message?: string | null;
   created_at: string;
   status?: string;
+}
+
+interface CareerApplication {
+  id: string;
+  name: string;
+  email: string;
+  application_type: "internship" | "full_time";
+  message?: string | null;
+  resume_filename: string;
+  resume_path: string;
+  submitted_at: string;
 }
 
 interface Leads {
@@ -131,6 +142,13 @@ export default function Admin() {
   const leads = useQuery({
     queryKey: ["admin-leads"],
     queryFn: () => apiGet<Leads>("/leads"),
+    enabled: !!me.data,
+    retry: false,
+  });
+
+  const careerApplications = useQuery({
+    queryKey: ["admin-career-applications"],
+    queryFn: () => apiGet<CareerApplication[]>("/admin/career-applications"),
     enabled: !!me.data,
     retry: false,
   });
@@ -248,6 +266,9 @@ export default function Admin() {
           <TabsTrigger value="applications" data-testid="admin-tab-applications">
             Applications ({leads.data?.applications.length ?? 0})
           </TabsTrigger>
+          <TabsTrigger value="career-applications" data-testid="admin-tab-career-applications">
+            Career Applications ({careerApplications.data?.length ?? 0})
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="enquiries" className="mt-6">
           <div className="overflow-hidden rounded-2xl border border-border bg-card" data-testid="admin-enquiries-table">
@@ -343,6 +364,60 @@ export default function Admin() {
                 ))}
                 {leads.data && leads.data.applications.length === 0 && (
                   <TableRow><TableCell colSpan={7} className="py-10 text-center text-muted-foreground">No applications yet.</TableCell></TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
+        <TabsContent value="career-applications" className="mt-6">
+          <div className="overflow-hidden rounded-2xl border border-border bg-card" data-testid="admin-career-applications-table">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Ref</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Message</TableHead>
+                  <TableHead>Resume</TableHead>
+                  <TableHead>Submitted</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {(careerApplications.data ?? []).map((app) => (
+                  <TableRow key={app.id}>
+                    <TableCell className="font-mono text-xs text-gold">{app.id.slice(0, 8).toUpperCase()}</TableCell>
+                    <TableCell className="font-medium">{app.name}</TableCell>
+                    <TableCell className="text-xs">{app.email}</TableCell>
+                    <TableCell>{app.application_type === "full_time" ? "Full-Time" : "Internship"}</TableCell>
+                    <TableCell className="max-w-52 text-xs text-muted-foreground">{app.message || "—"}</TableCell>
+                    <TableCell>
+                      <button
+                        type="button"
+                        className="text-xs font-medium text-gold underline-offset-2 hover:underline"
+                        onClick={async () => {
+                          const res = await fetch(apiUrl(`/admin/career-applications/${app.id}/download`), { credentials: "include" });
+                          if (!res.ok) {
+                            toast.error("Unable to download this resume.");
+                            return;
+                          }
+                          const blob = await res.blob();
+                          const url = URL.createObjectURL(blob);
+                          const a = document.createElement("a");
+                          a.href = url;
+                          a.download = app.resume_filename || "resume.pdf";
+                          a.click();
+                          URL.revokeObjectURL(url);
+                        }}
+                      >
+                        Download Resume
+                      </button>
+                    </TableCell>
+                    <TableCell className="text-xs text-muted-foreground">{fmtDate(app.submitted_at)}</TableCell>
+                  </TableRow>
+                ))}
+                {careerApplications.data && careerApplications.data.length === 0 && (
+                  <TableRow><TableCell colSpan={7} className="py-10 text-center text-muted-foreground">No career applications yet.</TableCell></TableRow>
                 )}
               </TableBody>
             </Table>

@@ -1,10 +1,11 @@
 from datetime import datetime, timedelta, timezone
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 
 from lib.db import db
 from lib.mail import create_notification
 from lib.security import new_id, require_role, utcnow
+from lib.storage import get_object_async
 from models.schemas import (
     APP_STATUSES,
     ApplicationStatusUpdate,
@@ -31,6 +32,7 @@ async def overview(user=admin):
         "enquiries": await db.enquiries.count_documents({}),
         "callbacks": await db.callbacks.count_documents({}),
         "job_applications": await db.applications.count_documents({}),
+        "career_applications": await db.career_applications.count_documents({}),
         "portal_applications": await db.portal_applications.count_documents({}),
         "portal_applications_open": await db.portal_applications.count_documents({"status": {"$nin": ["completed"]}}),
         "documents": await db.documents.count_documents({"is_deleted": False}),
@@ -49,6 +51,24 @@ async def list_customers(user=admin):
         pending = await db.documents.count_documents({"customer_id": u["id"], "is_deleted": False, "status": {"$in": ["uploaded", "under_review", "replacement_required"]}})
         out.append({**u, "documents": docs, "applications": apps, "documents_pending": pending})
     return out
+
+
+@router.get("/admin/career-applications")
+async def list_career_applications(user=admin):
+    return await db.career_applications.find({}, {"_id": 0}).sort("submitted_at", -1).to_list(200)
+
+
+@router.get("/admin/career-applications/{app_id}/download")
+async def download_career_application(app_id: str, user=admin):
+    app = await db.career_applications.find_one({"id": app_id})
+    if not app:
+        raise HTTPException(status_code=404, detail="Application not found")
+    data, content_type = await get_object_async(app["resume_path"])
+    return Response(
+        content=data,
+        media_type=content_type or "application/pdf",
+        headers={"Content-Disposition": f'attachment; filename="{app["resume_filename"]}"'},
+    )
 
 
 @router.get("/admin/customers/{cid}")

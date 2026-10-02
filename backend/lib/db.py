@@ -23,6 +23,7 @@ INDEXES: dict[str, list[IndexModel]] = {
     "enquiries": [IndexModel([("created_at", DESCENDING)], name="created_desc")],
     "callbacks": [IndexModel([("created_at", DESCENDING)], name="created_desc")],
     "applications": [IndexModel([("created_at", DESCENDING)], name="created_desc")],
+    "career_applications": [IndexModel([("submitted_at", DESCENDING)], name="submitted_desc")],
     "email_tokens": [IndexModel([("email", ASCENDING)], name="email")],
     "blog_posts": [IndexModel([("slug", ASCENDING)], name="slug", unique=True)],
     "documents": [IndexModel([("customer_id", ASCENDING)], name="customer")],

@@ -23,6 +23,7 @@ JWT_ALGORITHM = "HS256"
 
 from lib.security import create_token, get_current_admin, get_current_user, hash_password, verify_password
 from lib.mail import notify_new_lead
+from routers.career import router as career_router
 from routers.register import router as register_router
 from routers.portal import router as portal_router
 from routers.admin_routes import router as admin_routes_router
@@ -234,6 +235,7 @@ async def update_lead_status(kind: str, lead_id: str, body: StatusUpdate, admin:
 
 
 api_router.include_router(register_router)
+api_router.include_router(career_router)
 api_router.include_router(portal_router)
 api_router.include_router(admin_routes_router)
 api_router.include_router(public_router)
