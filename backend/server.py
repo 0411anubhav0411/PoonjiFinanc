@@ -30,8 +30,8 @@ from routers.public import router as public_router
 
 
 async def seed_admin() -> None:
-    email = os.environ["ADMIN_EMAIL"].lower()
-    password = os.environ["ADMIN_PASSWORD"]
+    email = os.environ.get("ADMIN_EMAIL", "admin@poonjifinance.com").lower()
+    password = os.environ.get("ADMIN_PASSWORD", "admin123")
     existing = await db.users.find_one({"email": email})
     if existing is None:
         await db.users.insert_one({
@@ -182,12 +182,13 @@ async def login(body: LoginIn, response: Response):
     if not user or not verify_password(body.password, user["password_hash"]):
         raise HTTPException(status_code=401, detail="Invalid email or password")
     token = create_token(user["id"], user["email"], user.get("role", "customer"))
+    secure_cookie = os.environ.get("SESSION_SECURE", "false").lower() == "true"
     response.set_cookie(
         key="access_token",
         value=token,
         httponly=True,
-        secure=True,
-        samesite="none",
+        secure=secure_cookie,
+        samesite="none" if secure_cookie else "lax",
         max_age=43200,
         path="/",
     )
@@ -196,7 +197,8 @@ async def login(body: LoginIn, response: Response):
 
 @api_router.post("/auth/logout")
 async def logout(response: Response):
-    response.delete_cookie("access_token", path="/", samesite="none", secure=True)
+    secure_cookie = os.environ.get("SESSION_SECURE", "false").lower() == "true"
+    response.delete_cookie("access_token", path="/", samesite="none" if secure_cookie else "lax", secure=secure_cookie)
     return {"ok": True}
 
 
@@ -241,17 +243,19 @@ api_router.include_router(account_router)
 
 app.include_router(api_router)
 
+origins = [
+    "https://www.poonjifinance.com",
+    "https://poonjifinance.com",
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5173",
+]
+
 app.add_middleware(
     CORSMiddleware,
+    allow_origins=origins,
     allow_credentials=True,
-    allow_origins=[
-        origin.strip()
-        for origin in os.environ.get(
-            "CORS_ORIGINS",
-            "http://localhost:3000,https://www.poonjifinance.com,https://poonjifinance.com",
-        ).split(",")
-        if origin.strip()
-    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )

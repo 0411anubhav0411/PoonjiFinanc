@@ -80,7 +80,7 @@ async def verify_email(body: VerifyEmailIn):
 
 
 @router.post("/auth/forgot-password")
-async def forgot_password(body: EmailIn):
+async def forgot_password(body: ForgotPasswordRequest):
     email = body.email.lower()
     user = await db.users.find_one({"email": email})
     if user:

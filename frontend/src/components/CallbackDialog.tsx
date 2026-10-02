@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { apiPost } from "@/lib/api";
+import { apiPost, ApiError } from "@/lib/api";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,8 +35,14 @@ export function CallbackDialog({
       });
       onOpenChange(false);
       setForm({ name: "", mobile: "", preferred_time: "Within 30 minutes" });
-    } catch {
-      toast.error("Could not submit right now. Please call us directly.");
+    } catch (error) {
+      const message = error instanceof ApiError
+        ? typeof error.body === "object" && error.body && "detail" in error.body
+          ? String((error.body as { detail?: string }).detail ?? "Could not submit right now. Please call us directly.")
+          : "Could not submit right now. Please call us directly."
+        : "Could not submit right now. Please call us directly.";
+      console.error("Callback request failed", error);
+      toast.error(message);
     } finally {
       setLoading(false);
     }

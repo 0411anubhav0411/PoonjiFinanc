@@ -1,8 +1,14 @@
-// Local development uses Vite's /api proxy; production points directly at the API host.
-const API_ORIGIN = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, "") ?? "";
+// Local development and Vercel use the /api proxy; direct API origins may include /api.
+export function normalizeApiBase(rawBase?: string): string {
+  const value = (rawBase ?? "").trim();
+  if (!value) return "";
+  return value.replace(/\/+$/, "").replace(/\/api$/i, "");
+}
 
-export function apiUrl(path: string): string {
-  return `${API_ORIGIN}/api${path}`;
+export function apiUrl(path: string, baseOverride?: string): string {
+  const base = normalizeApiBase(baseOverride ?? import.meta.env.VITE_API_BASE_URL);
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${base}/api${normalizedPath}`;
 }
 
 // Fields are declared, not constructor parameter properties: tsconfig sets

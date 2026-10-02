@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { Briefcase, ShieldCheck, UserRound } from "lucide-react";
-import { apiPost } from "@/lib/api";
+import { apiPost, ApiError } from "@/lib/api";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,8 +34,14 @@ export default function Login() {
       queryClient.setQueryData(["auth-me"], user);
       toast.success(`Welcome back, ${user.name}`);
       navigate(user.role === "admin" ? "/admin" : user.role === "partner" ? "/partner-portal" : "/portal");
-    } catch {
-      setError("Invalid email or password");
+    } catch (error) {
+      const message = error instanceof ApiError
+        ? typeof error.body === "object" && error.body && "detail" in error.body
+          ? String((error.body as { detail?: string }).detail ?? "Invalid email or password")
+          : "Unable to sign in right now. Please try again."
+        : "Unable to sign in right now. Please check your connection and try again.";
+      console.error("Login request failed", error);
+      setError(message);
     } finally {
       setLoading(false);
     }

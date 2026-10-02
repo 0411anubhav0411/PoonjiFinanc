@@ -11,6 +11,7 @@ from fastapi import HTTPException, Request
 load_dotenv(Path(__file__).parent.parent / ".env")
 
 JWT_ALGORITHM = "HS256"
+JWT_SECRET = os.environ.get("JWT_SECRET", "dev-secret-change-me")
 
 
 def hash_password(password: str) -> str:
@@ -29,7 +30,7 @@ def create_token(user_id: str, email: str, role: str) -> str:
         "type": "access",
         "exp": datetime.now(timezone.utc) + timedelta(hours=12),
     }
-    return jwt.encode(payload, os.environ["JWT_SECRET"], algorithm=JWT_ALGORITHM)
+    return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
 
 
 def new_id() -> str:
@@ -51,7 +52,7 @@ async def get_current_user(request: Request) -> dict:
     if not token:
         raise HTTPException(status_code=401, detail="Not authenticated")
     try:
-        payload = jwt.decode(token, os.environ["JWT_SECRET"], algorithms=[JWT_ALGORITHM])
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
     except jwt.PyJWTError:
         raise HTTPException(status_code=401, detail="Invalid or expired token")
     user = await db.users.find_one({"id": payload["sub"]}, {"_id": 0, "password_hash": 0})

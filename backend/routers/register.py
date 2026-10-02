@@ -1,4 +1,5 @@
 import asyncio
+import os
 
 from fastapi import APIRouter, HTTPException, Response
 
@@ -17,8 +18,15 @@ def public_user(user: dict) -> dict:
 
 def set_auth_cookie(response: Response, user: dict) -> None:
     token = create_token(user["id"], user["email"], user["role"])
+    secure_cookie = os.environ.get("SESSION_SECURE", "false").lower() == "true"
     response.set_cookie(
-        key="access_token", value=token, httponly=True, secure=True, samesite="none", max_age=43200, path="/"
+        key="access_token",
+        value=token,
+        httponly=True,
+        secure=secure_cookie,
+        samesite="none" if secure_cookie else "lax",
+        max_age=43200,
+        path="/",
     )
 
 
