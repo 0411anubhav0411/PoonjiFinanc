@@ -1,0 +1,50 @@
+services:
+  - type: web
+    name: poonji-finance-api
+    runtime: python
+    plan: starter
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/
+    disk:
+      name: poonji-finance-documents
+      mountPath: /var/data/poonji-finance
+      sizeGB: 10
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: MONGO_URL
+        sync: false
+      - key: DB_NAME
+        value: poonjifinance
+      - key: APP_URL
+        value: https://www.poonjifinance.com
+      - key: CORS_ORIGINS
+        value: https://www.poonjifinance.com,https://poonjifinance.com
+      - key: FILE_STORAGE_DIR
+        value: /var/data/poonji-finance
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USERNAME
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_USE_TLS
+        value: "true"
+      - key: EMAIL_FROM
+        value: no-reply@poonjifinance.com
+      - key: EMAIL_FROM_NAME
+        value: Poonji Finance
+      - key: EMAIL_REPLY_TO
+        value: info@poonjifinance.com
+      - key: LEAD_NOTIFY_EMAIL
+        sync: false

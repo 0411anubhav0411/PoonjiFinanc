@@ -1,59 +1,33 @@
 import asyncio
-import logging
+import mimetypes
 import os
 from pathlib import Path
 
-import requests
 from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent.parent / ".env")
 
-logger = logging.getLogger(__name__)
-
-STORAGE_BASE = (os.environ.get("INTEGRATION_PROXY_URL") or "").strip() or "https://integrations.emergentagent.com"
-STORAGE_URL = STORAGE_BASE.rstrip("/") + "/objstore/api/v1/storage"
-EMERGENT_KEY = os.environ.get("EMERGENT_LLM_KEY")
+STORAGE_DIR = Path(os.environ.get("FILE_STORAGE_DIR", Path(__file__).parent.parent / "uploads")).resolve()
 APP_NAME = "poonji-finance"
 
-_storage_key: str | None = None
-
-
-def init_storage(force: bool = False) -> str:
-    global _storage_key
-    if _storage_key and not force:
-        return _storage_key
-    resp = requests.post(f"{STORAGE_URL}/init", json={"emergent_key": EMERGENT_KEY}, timeout=30)
-    resp.raise_for_status()
-    _storage_key = resp.json()["storage_key"]
-    return _storage_key
+def _object_path(path: str) -> Path:
+    target = (STORAGE_DIR / path).resolve()
+    if target != STORAGE_DIR and STORAGE_DIR not in target.parents:
+        raise ValueError("Invalid storage path")
+    return target
 
 
 def put_object(path: str, data: bytes, content_type: str) -> dict:
-    resp = requests.put(
-        f"{STORAGE_URL}/objects/{path}",
-        headers={"X-Storage-Key": init_storage(), "Content-Type": content_type},
-        data=data,
-        timeout=120,
-    )
-    if resp.status_code == 404:
-        init_storage(force=True)
-        resp = requests.put(
-            f"{STORAGE_URL}/objects/{path}",
-            headers={"X-Storage-Key": _storage_key, "Content-Type": content_type},
-            data=data,
-            timeout=120,
-        )
-    resp.raise_for_status()
-    return resp.json()
+    target = _object_path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(data)
+    return {"path": path, "size": len(data), "content_type": content_type}
 
 
 def get_object(path: str) -> tuple[bytes, str]:
-    resp = requests.get(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": init_storage()}, timeout=60)
-    if resp.status_code == 404 and not path.startswith(APP_NAME):
-        init_storage(force=True)
-        resp = requests.get(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": _storage_key}, timeout=60)
-    resp.raise_for_status()
-    return resp.content, resp.headers.get("Content-Type", "application/octet-stream")
+    target = _object_path(path)
+    content_type = mimetypes.guess_type(target.name)[0] or "application/octet-stream"
+    return target.read_bytes(), content_type
 
 
 async def put_object_async(path: str, data: bytes, content_type: str) -> dict:

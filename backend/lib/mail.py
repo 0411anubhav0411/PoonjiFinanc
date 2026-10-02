@@ -1,21 +1,29 @@
+import asyncio
 import ipaddress
 import logging
 import os
 import re
+import smtplib
+import ssl
+from email.message import EmailMessage
+from email.utils import formataddr, make_msgid
 from html import escape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
 
-import httpx
 from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent.parent / ".env")
 
 logger = logging.getLogger(__name__)
 
-EMAIL_BASE_URL = "https://integrations.emergentagent.com"
-EMAIL_KEY = os.environ.get("EMERGENT_EMAIL_KEY", "")
+SMTP_HOST = os.environ.get("SMTP_HOST", "")
+SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
+SMTP_USERNAME = os.environ.get("SMTP_USERNAME", "")
+SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")
+SMTP_USE_TLS = os.environ.get("SMTP_USE_TLS", "true").lower() == "true"
+EMAIL_FROM = os.environ.get("EMAIL_FROM", "no-reply@poonjifinance.com")
 EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "Poonji Finance")
 EMAIL_REPLY_TO = os.environ.get("EMAIL_REPLY_TO")
 
@@ -94,21 +102,35 @@ def _assert_safe_email(subject: str, html: str) -> None:
 
 async def send_email(*, to: str, subject: str, html: str, reply_to: str | None = None) -> str | None:
     _assert_safe_email(subject, html)
-    payload = {"to": [to], "subject": subject, "html": html, "from_name": EMAIL_FROM_NAME}
+    if not SMTP_HOST:
+        logger.warning("Email not sent because SMTP_HOST is not configured")
+        return None
+
+    message = EmailMessage()
+    message["From"] = formataddr((EMAIL_FROM_NAME, EMAIL_FROM))
+    message["To"] = to
+    message["Subject"] = subject
+    message["Message-ID"] = make_msgid()
     if reply_to or EMAIL_REPLY_TO:
-        payload["contact_email"] = reply_to or EMAIL_REPLY_TO
+        message["Reply-To"] = reply_to or EMAIL_REPLY_TO
+    message.set_content("This message contains HTML content. Please view it in an HTML-capable email client.")
+    message.add_alternative(html, subtype="html")
+
     try:
-        async with httpx.AsyncClient(timeout=30) as client:
-            resp = await client.post(
-                f"{EMAIL_BASE_URL}/api/v1/email/send",
-                headers={"X-Email-Key": EMAIL_KEY},
-                json=payload,
-            )
-        resp.raise_for_status()
-        return resp.json().get("id")
+        await asyncio.to_thread(_send_smtp, message)
+        return message["Message-ID"]
     except Exception as exc:
         logger.error("Email send failed: %s", exc)
         return None
+
+
+def _send_smtp(message: EmailMessage) -> None:
+    with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=30) as client:
+        if SMTP_USE_TLS:
+            client.starttls(context=ssl.create_default_context())
+        if SMTP_USERNAME:
+            client.login(SMTP_USERNAME, SMTP_PASSWORD)
+        client.send_message(message)
 
 
 def lead_email_html(title: str, rows: list[tuple[str, str]]) -> str:
@@ -123,7 +145,7 @@ def lead_email_html(title: str, rows: list[tuple[str, str]]) -> str:
         f'<h2 style="margin:0 0 16px;font-size:18px;color:#1D4ED8">{escape(title)}</h2>'
         f'<table role="presentation" style="border:1px solid #E2E8F0;border-radius:8px">{body}</table>'
         '<p style="margin:20px 0 0;font-size:13px">'
-        '<a href="https://poonji-finance.preview.emergentagent.com/admin">Open your dashboard</a>'
+        '<a href="https://www.poonjifinance.com/admin">Open your dashboard</a>'
         " to follow up.</p>"
         '<p style="margin:16px 0 0;font-size:11px;color:#94A3B8">Sent by the Poonji Finance website. '
         "We never ask for passwords, OTPs or card details by email.</p>"
