@@ -21,7 +21,7 @@ from lib.db import client, db, ensure_indexes
 logger = logging.getLogger(__name__)
 JWT_ALGORITHM = "HS256"
 
-from lib.security import create_token, get_current_admin, get_current_user, hash_password, verify_password
+from lib.security import create_token, get_current_admin, get_current_user, hash_password, session_cookie_secure, verify_password
 from lib.mail import notify_new_lead
 from routers.career import router as career_router
 from routers.register import router as register_router
@@ -32,7 +32,10 @@ from routers.public import router as public_router
 
 async def seed_admin() -> None:
     email = os.environ.get("ADMIN_EMAIL", "admin@poonjifinance.com").lower()
-    password = os.environ.get("ADMIN_PASSWORD", "admin123")
+    password = os.environ.get("ADMIN_PASSWORD")
+    if not password:
+        logger.error("Admin account seeding skipped because ADMIN_PASSWORD is not configured")
+        return
     existing = await db.users.find_one({"email": email})
     if existing is None:
         await db.users.insert_one({
@@ -181,9 +184,10 @@ async def create_application(body: ApplicationCreate):
 async def login(body: LoginIn, response: Response):
     user = await db.users.find_one({"email": body.email.lower()})
     if not user or not verify_password(body.password, user["password_hash"]):
+        logger.warning("Login failed: invalid credentials")
         raise HTTPException(status_code=401, detail="Invalid email or password")
     token = create_token(user["id"], user["email"], user.get("role", "customer"))
-    secure_cookie = os.environ.get("SESSION_SECURE", "false").lower() == "true"
+    secure_cookie = session_cookie_secure()
     response.set_cookie(
         key="access_token",
         value=token,
@@ -198,7 +202,7 @@ async def login(body: LoginIn, response: Response):
 
 @api_router.post("/auth/logout")
 async def logout(response: Response):
-    secure_cookie = os.environ.get("SESSION_SECURE", "false").lower() == "true"
+    secure_cookie = session_cookie_secure()
     response.delete_cookie("access_token", path="/", samesite="none" if secure_cookie else "lax", secure=secure_cookie)
     return {"ok": True}
 
@@ -245,14 +249,23 @@ api_router.include_router(account_router)
 
 app.include_router(api_router)
 
-origins = [
-    "https://www.poonjifinance.com",
-    "https://poonjifinance.com",
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:5173",
-]
+configured_origins = os.environ.get("CORS_ORIGINS", "")
+origins = [origin.strip().rstrip("/") for origin in configured_origins.split(",") if origin.strip()]
+if not origins:
+    origins = [
+        "https://www.poonjifinance.com",
+        "https://poonjifinance.com",
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:5173",
+    ]
+if "*" in origins:
+    logger.error("Ignoring wildcard CORS origin because credentialed requests are enabled")
+    origins = [origin for origin in origins if origin != "*"]
+
+logger.info("CORS configured for %d explicit origin(s)", len(origins))
+logger.info("Career application endpoints mounted: POST /api/career/applications and admin GET /api/admin/career-applications")
 
 app.add_middleware(
     CORSMiddleware,

@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, Response
 
 from lib.db import db
 from lib.mail import create_notification, notify_admins
-from lib.security import create_token, hash_password, new_id, utcnow
+from lib.security import create_token, hash_password, new_id, session_cookie_secure, utcnow
 from models.schemas import CustomerRegister, PartnerRegister
 from routers.account import issue_verification
 
@@ -18,7 +18,7 @@ def public_user(user: dict) -> dict:
 
 def set_auth_cookie(response: Response, user: dict) -> None:
     token = create_token(user["id"], user["email"], user["role"])
-    secure_cookie = os.environ.get("SESSION_SECURE", "false").lower() == "true"
+    secure_cookie = session_cookie_secure()
     response.set_cookie(
         key="access_token",
         value=token,

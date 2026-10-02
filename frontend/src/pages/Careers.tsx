@@ -26,6 +26,7 @@ function CareersApplicationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const submissionLocked = useRef(false);
 
   const validateResume = (file: File) => {
     const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
@@ -62,6 +63,7 @@ function CareersApplicationForm() {
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    if (submissionLocked.current) return;
 
     const trimmedName = name.trim();
     const trimmedEmail = email.trim();
@@ -78,6 +80,7 @@ function CareersApplicationForm() {
     }
 
     setError("");
+    submissionLocked.current = true;
     setIsSubmitting(true);
 
     try {
@@ -103,6 +106,7 @@ function CareersApplicationForm() {
       setError(detail);
       toast.error(detail);
     } finally {
+      submissionLocked.current = false;
       setIsSubmitting(false);
     }
   };

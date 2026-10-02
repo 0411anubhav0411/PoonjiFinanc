@@ -1,4 +1,6 @@
 import os
+import logging
+import secrets
 import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -11,7 +13,17 @@ from fastapi import HTTPException, Request
 load_dotenv(Path(__file__).parent.parent / ".env")
 
 JWT_ALGORITHM = "HS256"
-JWT_SECRET = os.environ.get("JWT_SECRET", "dev-secret-change-me")
+logger = logging.getLogger(__name__)
+JWT_SECRET = os.environ.get("JWT_SECRET")
+if not JWT_SECRET:
+    if os.environ.get("SESSION_SECURE", "false").strip().lower() == "true":
+        raise RuntimeError("JWT_SECRET must be configured when secure sessions are enabled")
+    JWT_SECRET = secrets.token_urlsafe(32)
+    logger.warning("JWT_SECRET is unset; using an ephemeral key for local development")
+
+
+def session_cookie_secure() -> bool:
+    return os.environ.get("SESSION_SECURE", "false").strip().lower() == "true"
 
 
 def hash_password(password: str) -> str:
@@ -50,13 +62,24 @@ async def get_current_user(request: Request) -> dict:
         if auth.startswith("Bearer "):
             token = auth[7:]
     if not token:
+        logger.warning("Authentication failed: access token missing")
         raise HTTPException(status_code=401, detail="Not authenticated")
     try:
         payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
     except jwt.PyJWTError:
+        logger.warning("Authentication failed: invalid or expired access token")
         raise HTTPException(status_code=401, detail="Invalid or expired token")
-    user = await db.users.find_one({"id": payload["sub"]}, {"_id": 0, "password_hash": 0})
+    user_id = payload.get("sub")
+    if not isinstance(user_id, str) or not user_id:
+        logger.warning("Authentication failed: access token has no valid subject")
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+    try:
+        user = await db.users.find_one({"id": user_id}, {"_id": 0, "password_hash": 0})
+    except Exception as exc:
+        logger.error("Authentication user lookup failed (%s)", type(exc).__name__)
+        raise HTTPException(status_code=503, detail="Authentication service unavailable") from exc
     if not user:
+        logger.warning("Authentication failed: token subject does not match an active user")
         raise HTTPException(status_code=401, detail="User not found")
     return user
 

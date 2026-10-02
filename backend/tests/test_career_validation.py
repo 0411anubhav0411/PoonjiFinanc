@@ -23,6 +23,16 @@ def test_rejects_non_pdf_file():
         validate_resume_upload(file.data, file.filename, file.content_type)
 
 
+def test_rejects_mismatched_pdf_metadata():
+    with pytest.raises(ValueError, match="content type"):
+        validate_resume_upload(b"%PDF-1.4\n", "resume.pdf", "application/octet-stream")
+
+
+def test_rejects_invalid_pdf_signature():
+    with pytest.raises(ValueError, match="valid PDF"):
+        validate_resume_upload(b"not a pdf", "resume.pdf", "application/pdf")
+
+
 def test_rejects_files_over_5mb():
     file = FakeFile("resume.pdf", "application/pdf", b"a" * (5 * 1024 * 1024 + 1))
 

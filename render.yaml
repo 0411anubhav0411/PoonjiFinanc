@@ -20,6 +20,8 @@ services:
         value: poonjifinance
       - key: APP_URL
         value: https://www.poonjifinance.com
+      - key: SESSION_SECURE
+        value: "true"
       - key: CORS_ORIGINS
         value: https://www.poonjifinance.com,https://poonjifinance.com
       - key: FILE_STORAGE_DIR

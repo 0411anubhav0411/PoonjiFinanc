@@ -34,11 +34,8 @@ def validate_resume_upload(file_bytes: bytes, filename: str | None, content_type
 
     safe_filename = (filename or "").lower()
     mime_type = (content_type or "").lower()
-    is_pdf_name = safe_filename.endswith(".pdf")
-    is_pdf_mime = mime_type in {"application/pdf", "application/x-pdf", "application/octet-stream"}
+    if not safe_filename.endswith(".pdf") or mime_type != "application/pdf":
+        raise ValueError("Resume must be a PDF file with PDF content type.")
 
-    if not is_pdf_name and not is_pdf_mime:
-        raise ValueError("Resume must be a PDF file.")
-
-    if not file_bytes.startswith(b"%PDF"):
+    if not file_bytes.startswith(b"%PDF-"):
         raise ValueError("Resume file appears to be corrupted or not a valid PDF.")
