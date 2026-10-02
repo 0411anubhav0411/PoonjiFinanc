@@ -3,6 +3,7 @@ import { ArrowRight, Eye, HeartHandshake, Scale, Sparkles, Target, Users } from 
 import { Reveal, SectionHead } from "@/components/Reveal";
 import { buttonVariants } from "@/components/ui/button";
 import { IMG, STATS } from "@/data/content";
+import { useSeo } from "@/lib/seo";
 
 const VALUES = [
   { icon: Eye, title: "Transparency", text: "Rates, fees and commissions disclosed upfront. Always." },
@@ -14,6 +15,7 @@ const VALUES = [
 ];
 
 export default function About() {
+  useSeo("About Us — Poonji Finance", "Our story, vision, mission and values — a financial facilitation platform built on transparency and customer-first guidance.");
   return (
     <div>
       <section className="hero-bg grain relative overflow-hidden">

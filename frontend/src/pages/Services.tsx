@@ -4,8 +4,10 @@ import { Reveal, SectionHead } from "@/components/Reveal";
 import { EnquiryForm } from "@/components/EnquiryForm";
 import { Button } from "@/components/ui/button";
 import { SERVICE_OPTIONS, SERVICE_VERTICALS } from "@/data/content";
+import { useSeo } from "@/lib/seo";
 
 export default function Services() {
+  useSeo("Our Services — Poonji Finance", "Home loans, business and MSME finance, personal and vehicle loans, insurance, fixed deposits, mutual funds and investment facilitation.");
   const formRef = useRef<HTMLDivElement>(null);
   const [service, setService] = useState<string>(SERVICE_OPTIONS[0]);
   const [formKey, setFormKey] = useState(0);

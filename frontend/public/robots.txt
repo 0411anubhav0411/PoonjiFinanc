@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+
+Sitemap: https://poonji-finance.preview.emergentagent.com/sitemap.xml

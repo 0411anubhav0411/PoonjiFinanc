@@ -4,10 +4,12 @@ import { ChevronDown } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { Input } from "@/components/ui/input";
 import { FAQS } from "@/data/content";
+import { useSeo } from "@/lib/seo";
 
 const CATEGORIES = ["All", ...Array.from(new Set(FAQS.map((f) => f.category)))];
 
 export default function Faq() {
+  useSeo("FAQs — Poonji Finance", "Answers to common questions about loan facilitation, insurance, investments, eligibility, documents and charges.");
   const [cat, setCat] = useState("All");
   const [q, setQ] = useState("");
   const [open, setOpen] = useState<number | null>(0);

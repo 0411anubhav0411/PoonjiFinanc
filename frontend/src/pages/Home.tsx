@@ -10,6 +10,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { emi } from "@/lib/finance";
 import { formatINR } from "@/lib/format";
 import { BLOG_POSTS, IMG, SERVICE_VERTICALS, STATS, STEPS, WHY_POINTS } from "@/data/content";
+import { useSeo } from "@/lib/seo";
 
 function HeroLine({ children, i }: { children: React.ReactNode; i: number }) {
   return (
@@ -58,6 +59,10 @@ const BENTO_SPANS = [
 ];
 
 export default function Home() {
+  useSeo(
+    "Poonji Finance — One Platform. Multiple Financial Solutions.",
+    "Loans, insurance, fixed deposits and mutual funds facilitated transparently across 45+ banks, NBFCs, insurers and investment platforms."
+  );
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 120]);

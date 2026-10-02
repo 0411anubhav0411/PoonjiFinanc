@@ -6,8 +6,10 @@ import { EnquiryForm } from "@/components/EnquiryForm";
 import { CallbackDialog } from "@/components/CallbackDialog";
 import { Button } from "@/components/ui/button";
 import { STEPS } from "@/data/content";
+import { useSeo } from "@/lib/seo";
 
 export default function HowItWorks() {
+  useSeo("How It Works — Poonji Finance", "Five transparent steps from enquiry to completion — how Poonji Finance facilitates your loan, insurance or investment application.");
   const [callbackOpen, setCallbackOpen] = useState(false);
 
   return (

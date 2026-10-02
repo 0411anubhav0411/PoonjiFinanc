@@ -44,14 +44,22 @@ Build a modern, premium, trustworthy multi-page website for Poonji Finance, an I
 - Browser: founders grid shows all 3 Gogias; Retirement (₹8.61 Cr corpus), Goal (₹1.57 Cr), SWP (₹96 L withdrawn) compute live; admin status select flips to Closed.
 - yarn typecheck clean.
 
+## Implemented (2026-10-02, round 3)
+- Real contact details live sitewide: info@poonjifinance.com, +91 93118 28382 / +91 99107 97973, 703 Golden Wood Tower, Madhuban Bapudham, Ghaziabad UP. LEAD_NOTIFY_EMAIL + EMAIL_REPLY_TO now point to info@poonjifinance.com.
+- New Careers page (/careers): 3 openings, perks, apply-via-email CTAs. Nav reordered per user: Home, About Us, Services, How It Works, Calculators, Careers, Resources, Blog, FAQs, Contact.
+- SEO: useSeo hook sets per-page title + meta description on all 15 routes; sitemap.xml + robots.txt served (200 verified).
+- Contact page: real Google Maps embed of the Ghaziabad office area.
+
+## Verified (round 3)
+- sitemap.xml / robots.txt / /careers return 200 on public URL; yarn typecheck clean.
+- Backend restarted with new email env; lead alert recipient now the real inbox.
+
 ## Backlog
-- P0: Real LEAD_NOTIFY_EMAIL from user (alerts currently target placeholder address) + real phone/email/address sitewide
 - P1: Founder photos + final bios from user
-- P1: Google Maps embed on Contact
-- P2: Blog CMS, SEO metadata, analytics
+- P2: Blog CMS, analytics
 - P3: Customer portal, application tracking, document upload, CRM integration
 
 ## Next Tasks
-1. Set real owner inbox email for lead alerts
-2. Replace placeholder contact details
-3. Founder photos
+1. Founder photos
+2. Blog CMS
+3. Analytics

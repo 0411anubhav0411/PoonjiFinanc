@@ -4,9 +4,11 @@ import { Reveal, SectionHead } from "@/components/Reveal";
 import { EnquiryForm } from "@/components/EnquiryForm";
 import { CallbackDialog } from "@/components/CallbackDialog";
 import { Button } from "@/components/ui/button";
-import { CONTACT, IMG } from "@/data/content";
+import { CONTACT } from "@/data/content";
+import { useSeo } from "@/lib/seo";
 
 export default function Contact() {
+  useSeo("Contact Us — Poonji Finance", "Call, WhatsApp or email Poonji Finance — Ghaziabad, UP. Request a callback and we respond within 30 minutes during business hours.");
   const [callbackOpen, setCallbackOpen] = useState(false);
 
   return (
@@ -29,7 +31,7 @@ export default function Contact() {
         <div className="grid gap-6 lg:grid-cols-[1fr_1.3fr]">
           <div className="grid content-start gap-4">
             {[
-              { icon: Phone, label: "Call Us", value: CONTACT.phone, href: CONTACT.phoneHref, testid: "contact-phone" },
+              { icon: Phone, label: "Call Us", value: `${CONTACT.phone} · ${CONTACT.phone2}`, href: CONTACT.phoneHref, testid: "contact-phone" },
               { icon: Mail, label: "Email", value: CONTACT.email, href: `mailto:${CONTACT.email}`, testid: "contact-email" },
               { icon: MessageCircle, label: "WhatsApp", value: "Chat with us instantly", href: CONTACT.whatsapp, testid: "contact-whatsapp" },
               { icon: MapPin, label: "Office", value: CONTACT.address, testid: "contact-address" },
@@ -59,12 +61,16 @@ export default function Contact() {
               </Button>
             </Reveal>
             <Reveal delay={0.3}>
-              <div className="relative overflow-hidden rounded-2xl border border-border">
-                <img src={IMG.skyline} alt="Poonji Finance office district" className="aspect-[16/9] w-full object-cover" loading="lazy" />
-                <div className="absolute inset-0 flex items-end bg-gradient-to-t from-background/90 to-transparent p-5">
-                  <p className="text-sm text-muted-foreground">Bengaluru · Serving customers across India</p>
-                </div>
+              <div className="overflow-hidden rounded-2xl border border-border">
+                <iframe
+                  title="Poonji Finance office — Madhuban Bapudham, Ghaziabad"
+                  data-testid="contact-map"
+                  src="https://maps.google.com/maps?q=Madhuban%20Bapudham%2C%20Ghaziabad%2C%20Uttar%20Pradesh&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                  className="aspect-[16/9] w-full"
+                  loading="lazy"
+                />
               </div>
+              <p className="mt-3 text-sm text-muted-foreground">Madhuban Bapudham, Ghaziabad · Serving customers across India</p>
             </Reveal>
           </div>
 

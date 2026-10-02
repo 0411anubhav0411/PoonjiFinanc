@@ -7,7 +7,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
         <img src="/logo.png" alt="Poonji Finance logo" className="h-full w-full object-contain" />
       </span>
       {!compact && (
-        <span className="font-heading text-lg font-bold tracking-tight text-foreground">
+        <span className="hidden font-heading text-lg font-bold tracking-tight whitespace-nowrap text-foreground xl:block">
           Poonji<span className="text-gold"> Finance</span>
         </span>
       )}

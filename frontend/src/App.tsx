@@ -11,6 +11,7 @@ import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import Faq from "@/pages/Faq";
 import Contact from "@/pages/Contact";
+import Careers from "@/pages/Careers";
 import Legal from "@/pages/Legal";
 import Admin from "@/pages/Admin";
 import NotFound from "@/pages/NotFound";
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/founders" element={<Founders />} />
         <Route path="/services" element={<Services />} />
         <Route path="/calculators" element={<Calculators />} />
+        <Route path="/careers" element={<Careers />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/blog" element={<Blog />} />

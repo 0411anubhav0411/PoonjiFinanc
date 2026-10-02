@@ -44,7 +44,7 @@ export function Footer({ onCallback }: { onCallback: () => void }) {
             <h3 className="font-heading text-sm font-semibold tracking-wide text-foreground">Reach Us</h3>
             <ul className="mt-4 grid gap-3 text-sm text-muted-foreground">
               <li className="flex gap-2.5"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />{CONTACT.address}</li>
-              <li><a data-testid="footer-phone" href={CONTACT.phoneHref} className="flex gap-2.5 transition-colors hover:text-gold"><Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />{CONTACT.phone}</a></li>
+              <li className="flex gap-2.5"><Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" /><span><a data-testid="footer-phone" href={CONTACT.phoneHref} className="transition-colors hover:text-gold">{CONTACT.phone}</a>{" · "}<a data-testid="footer-phone2" href={CONTACT.phone2Href} className="transition-colors hover:text-gold">{CONTACT.phone2}</a></span></li>
               <li><a data-testid="footer-email" href={`mailto:${CONTACT.email}`} className="flex gap-2.5 transition-colors hover:text-gold"><Mail className="mt-0.5 h-4 w-4 shrink-0 text-gold" />{CONTACT.email}</a></li>
               <li className="flex gap-2.5"><Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold" />{CONTACT.hours}</li>
             </ul>

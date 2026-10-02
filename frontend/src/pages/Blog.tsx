@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { Reveal } from "@/components/Reveal";
 import { Input } from "@/components/ui/input";
 import { BLOG_POSTS } from "@/data/content";
+import { useSeo } from "@/lib/seo";
 
 const CATEGORIES = ["All", ...Array.from(new Set(BLOG_POSTS.map((p) => p.category)))];
 
 export default function Blog() {
+  useSeo("Blog — Poonji Finance", "Plain-language insights on loans, insurance, mutual funds, deposits and personal finance from the Poonji Finance team.");
   const [cat, setCat] = useState("All");
   const [q, setQ] = useState("");
   const posts = BLOG_POSTS.filter(

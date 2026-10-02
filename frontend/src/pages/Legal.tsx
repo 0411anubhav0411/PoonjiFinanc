@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 import { CONTACT } from "@/data/content";
+import { useSeo } from "@/lib/seo";
 
 const PAGES: Record<string, { title: string; sections: { h: string; p: string }[] }> = {
   disclaimer: {
@@ -41,6 +42,7 @@ const PAGES: Record<string, { title: string; sections: { h: string; p: string }[
 
 export default function Legal({ kind }: { kind: "disclaimer" | "privacy" | "terms" | "grievance" }) {
   const page = PAGES[kind];
+  useSeo(`${page.title} — Poonji Finance`, "Legal and compliance information for Poonji Finance customers and visitors.");
   return (
     <div>
       <section className="hero-bg grain relative overflow-hidden">

@@ -12,10 +12,11 @@ import { Toaster } from "@/components/ui/sonner";
 import { CONTACT } from "@/data/content";
 
 const NAV = [
+  { to: "/about", label: "About Us" },
   { to: "/services", label: "Services" },
-  { to: "/calculators", label: "Calculators" },
   { to: "/how-it-works", label: "How It Works" },
-  { to: "/about", label: "About" },
+  { to: "/calculators", label: "Calculators" },
+  { to: "/careers", label: "Careers" },
   { to: "/resources", label: "Resources" },
   { to: "/blog", label: "Blog" },
   { to: "/faqs", label: "FAQs" },
@@ -61,7 +62,7 @@ export default function Layout() {
                 to={item.to}
                 data-testid={`nav-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
                 className={({ isActive }) =>
-                  `rounded-md px-3 py-2 text-sm transition-colors ${
+                  `rounded-md px-2 py-2 text-[13px] whitespace-nowrap transition-colors ${
                     isActive ? "text-gold" : "text-muted-foreground hover:text-foreground"
                   }`
                 }

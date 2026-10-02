@@ -2,10 +2,15 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { BLOG_POSTS } from "@/data/content";
+import { useSeo } from "@/lib/seo";
 
 export default function BlogPost() {
   const { slug } = useParams();
   const post = BLOG_POSTS.find((p) => p.slug === slug);
+  useSeo(
+    post ? `${post.title} — Poonji Finance Blog` : "Blog — Poonji Finance",
+    post?.excerpt ?? "Plain-language financial insights from Poonji Finance."
+  );
 
   if (!post) {
     return (

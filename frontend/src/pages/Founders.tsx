@@ -3,8 +3,10 @@ import { ArrowRight, Quote } from "lucide-react";
 import { Reveal, SectionHead } from "@/components/Reveal";
 import { buttonVariants } from "@/components/ui/button";
 import { FOUNDERS } from "@/data/content";
+import { useSeo } from "@/lib/seo";
 
 export default function Founders() {
+  useSeo("Our Founders — Poonji Finance", "Meet Balbir Singh Gogia, Harshual Singh Gogia and Harshita Singh Gogia — the founding family behind Poonji Finance.");
   return (
     <div>
       <section className="hero-bg grain relative overflow-hidden">

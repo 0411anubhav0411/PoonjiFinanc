@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/button";
+import { useSeo } from "@/lib/seo";
 
 export default function NotFound() {
+  useSeo("Page Not Found — Poonji Finance", "The page you are looking for does not exist.");
   return (
     <div className="mx-auto max-w-2xl px-4 py-40 text-center">
       <p className="font-mono text-sm text-gold">404</p>

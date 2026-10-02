@@ -17,6 +17,7 @@ import {
   RetirementCalc,
   GoalCalc,
 } from "@/components/calc/AdvancedCalcs";
+import { useSeo } from "@/lib/seo";
 
 const TABS = [
   { id: "emi", label: "Loan EMI", node: <EmiGeneral /> },
@@ -38,6 +39,7 @@ const TABS = [
 ];
 
 export default function Calculators() {
+  useSeo("Financial Calculators — Poonji Finance", "16 free calculators — EMI, home loan, SIP, step-up SIP, SWP, FD, RD, CAGR, inflation, retirement and goal planning.");
   return (
     <div>
       <section className="hero-bg grain relative overflow-hidden">

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { Reveal, SectionHead } from "@/components/Reveal";
 import { GUIDES } from "@/data/content";
+import { useSeo } from "@/lib/seo";
 
 const GLOSSARY = [
   { term: "EMI", def: "Equated Monthly Instalment — fixed monthly loan repayment covering principal + interest." },
@@ -17,6 +18,7 @@ const GLOSSARY = [
 ];
 
 export default function Resources() {
+  useSeo("Financial Guides & Resources — Poonji Finance", "Plain-language guides on credit scores, EMIs, SIPs, insurance and personal finance, plus a glossary of essential terms.");
   return (
     <div>
       <section className="hero-bg grain relative overflow-hidden">

@@ -15,11 +15,13 @@ import {
 } from "lucide-react";
 
 export const CONTACT = {
-  phone: "+91 98765 43210",
-  phoneHref: "tel:+919876543210",
-  whatsapp: "https://wa.me/919876543210?text=Hi%20Poonji%20Finance%2C%20I%20have%20an%20enquiry",
-  email: "hello@poonjifinance.in",
-  address: "Level 4, Prestige Towers, MG Road, Bengaluru, Karnataka 560001",
+  phone: "+91 93118 28382",
+  phone2: "+91 99107 97973",
+  phoneHref: "tel:+919311828382",
+  phone2Href: "tel:+919910799773",
+  whatsapp: "https://wa.me/919311828382?text=Hi%20Poonji%20Finance%2C%20I%20have%20an%20enquiry",
+  email: "info@poonjifinance.com",
+  address: "703, 7th Floor, Golden Wood Tower, GH-4, Pocket-C, Madhuban Bapudham, Ghaziabad, Uttar Pradesh",
   hours: "Mon – Sat, 9:30 AM – 6:30 PM IST",
 };
 
@@ -292,7 +294,7 @@ export const FAQS: Faq[] = [
   { category: "Investments", q: "What is a mutual fund?", a: "A pool where many investors' money is managed professionally across shares, bonds or both. You own 'units' whose value moves with the underlying investments. Mutual fund investments are subject to market risks — read scheme documents carefully." },
   { category: "Insurance", q: "How does insurance work?", a: "You pay a premium; the insurer promises a payout on a defined event (death, hospitalisation, accident, damage). The right cover depends on dependants, loans and lifestyle — not on returns. Protection first, investment separately." },
   { category: "Deposits", q: "What is a fixed deposit?", a: "A deposit locked with a bank or NBFC for a fixed tenure at a fixed interest rate. Returns are guaranteed by the institution, and bank FDs carry DICGC insurance up to ₹5 lakh per depositor per bank. Interest is taxable at your slab." },
-  { category: "Process", q: "How can I contact Poonji Finance?", a: "Call us at +91 98765 43210, WhatsApp us, email hello@poonjifinance.in, or submit any enquiry form on this website — we respond within one business day, and callback requests within 30 minutes during working hours." },
+  { category: "Process", q: "How can I contact Poonji Finance?", a: "Call us at +91 93118 28382 or +91 99107 97973, WhatsApp us, email info@poonjifinance.com, or submit any enquiry form on this website — we respond within one business day, and callback requests within 30 minutes during working hours." },
 ];
 
 export const GUIDES = [
