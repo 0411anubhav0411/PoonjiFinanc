@@ -47,3 +47,71 @@ export function loanEligibility(monthlyIncome: number, existingEmis: number, ann
   const eligible = r === 0 ? maxEmi * n : maxEmi * ((Math.pow(1 + r, n) - 1) / (r * Math.pow(1 + r, n)));
   return { maxEmi, eligible };
 }
+
+export function stepUpSip(monthly: number, stepUpPct: number, annualReturn: number, years: number) {
+  const r = annualReturn / 1200;
+  let invested = 0;
+  let value = 0;
+  let m = monthly;
+  for (let month = 1; month <= Math.round(years * 12); month++) {
+    if (month > 1 && (month - 1) % 12 === 0) m *= 1 + stepUpPct / 100;
+    invested += m;
+    value = (value + m) * (1 + r);
+  }
+  return { invested, maturity: value, gains: value - invested };
+}
+
+export function swp(initial: number, monthlyWithdrawal: number, annualReturn: number, years: number) {
+  const r = annualReturn / 1200;
+  let value = initial;
+  let withdrawn = 0;
+  for (let i = 0; i < Math.round(years * 12) && value > 0; i++) {
+    value = value * (1 + r);
+    const w = Math.min(monthlyWithdrawal, value);
+    value -= w;
+    withdrawn += w;
+  }
+  return { withdrawn, remaining: Math.max(0, value) };
+}
+
+export function cagr(beginValue: number, endValue: number, years: number) {
+  if (beginValue <= 0 || years <= 0) return 0;
+  return (Math.pow(endValue / beginValue, 1 / years) - 1) * 100;
+}
+
+export function simpleInterest(principal: number, annualRate: number, years: number) {
+  const interest = (principal * annualRate * years) / 100;
+  return { interest, total: principal + interest };
+}
+
+export function inflationCost(todayCost: number, inflationRate: number, years: number) {
+  const future = todayCost * Math.pow(1 + inflationRate / 100, years);
+  return { future, increase: future - todayCost };
+}
+
+export function retirementPlan(
+  currentAge: number,
+  retireAge: number,
+  currentSavings: number,
+  monthlyInvestment: number,
+  annualReturn: number,
+  inflationPct: number,
+  monthlyExpenseToday: number
+) {
+  const years = Math.max(1, retireAge - currentAge);
+  const fvSavings = currentSavings * Math.pow(1 + annualReturn / 100, years);
+  const sipFv = sipFutureValue(monthlyInvestment, annualReturn, years).maturity;
+  const corpus = fvSavings + sipFv;
+  const futureMonthlyExpense = monthlyExpenseToday * Math.pow(1 + inflationPct / 100, years);
+  const required = futureMonthlyExpense * 12 * 25;
+  return { years, corpus, required, gap: corpus - required, futureMonthlyExpense };
+}
+
+export function goalPlan(targetToday: number, inflationPct: number, years: number, annualReturn: number) {
+  const futureCost = targetToday * Math.pow(1 + inflationPct / 100, years);
+  const r = annualReturn / 1200;
+  const n = Math.round(years * 12);
+  const sipNeeded = r === 0 ? futureCost / n : (futureCost * r) / ((Math.pow(1 + r, n) - 1) * (1 + r));
+  const lumpsumNeeded = futureCost / Math.pow(1 + annualReturn / 100, years);
+  return { futureCost, sipNeeded, lumpsumNeeded };
+}

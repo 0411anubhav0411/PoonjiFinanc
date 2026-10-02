@@ -24,7 +24,7 @@ export default function Resources() {
           <Reveal>
             <p className="overline-tag">Resources & Financial Guides</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              Learn the system, <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">then use it</span>
+              Learn the system, <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">then use it</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Plain-language guides on loans, insurance, deposits and investing — the same explanations our advisors give across the table.
@@ -43,10 +43,10 @@ export default function Resources() {
                 data-testid={`guide-${g.title.toLowerCase().replace(/[^a-z]+/g, "-")}`}
                 className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-blue-600/60"
               >
-                <BookOpen className="h-5 w-5 text-sky-400" />
+                <BookOpen className="h-5 w-5 text-gold" />
                 <h3 className="mt-4 font-heading text-base font-bold leading-snug">{g.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{g.desc}</p>
-                <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm text-sky-400 opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm text-gold opacity-0 transition-opacity group-hover:opacity-100">
                   Read guide <ArrowRight className="h-3.5 w-3.5" />
                 </span>
               </Link>
@@ -62,7 +62,7 @@ export default function Resources() {
             {GLOSSARY.map((g, i) => (
               <Reveal key={g.term} delay={i * 0.03}>
                 <div className="h-full rounded-2xl border border-border bg-background/60 p-5">
-                  <p className="font-mono text-sm font-semibold text-sky-400">{g.term}</p>
+                  <p className="font-mono text-sm font-semibold text-gold">{g.term}</p>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{g.def}</p>
                 </div>
               </Reveal>

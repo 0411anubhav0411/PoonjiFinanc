@@ -12,34 +12,36 @@ export default function Founders() {
           <Reveal>
             <p className="overline-tag">Our Founders</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              The people behind <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">Poonji</span>
+              The people behind <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">Poonji</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Two careers spent inside the financial system — and one shared conviction that customers deserve someone on their side of the table.
+              A founding family with decades of combined experience across banking, insurance and operations — and one shared conviction: customers deserve someone on their side of the table.
             </p>
           </Reveal>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-2" data-testid="founders-grid">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-testid="founders-grid">
           {FOUNDERS.map((f, i) => (
             <Reveal key={f.name} delay={i * 0.1}>
               <article className="overflow-hidden rounded-3xl border border-border bg-card">
-                <div className="relative">
-                  <img src={f.image} alt={`${f.name}, ${f.role}`} className="aspect-[16/8] w-full object-cover object-top" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
-                  <div className="absolute bottom-4 left-6">
-                    <h2 className="font-heading text-2xl font-bold">{f.name}</h2>
-                    <p className="text-sm text-sky-400">{f.role}</p>
-                  </div>
+                <div className="relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-950/80 via-card to-background py-14">
+                  <div className="absolute inset-0 opacity-40 [background:radial-gradient(circle_at_50%_120%,rgba(212,175,55,0.15),transparent_60%)]" />
+                  <span className="relative flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-600 to-[#D4AF37] font-heading text-3xl font-extrabold text-white shadow-xl shadow-blue-950/50">
+                    {f.initials}
+                  </span>
+                </div>
+                <div className="border-t border-border px-6 pt-5 sm:px-8">
+                  <h2 className="font-heading text-2xl font-bold">{f.name}</h2>
+                  <p className="text-sm text-gold">{f.role}</p>
                 </div>
                 <div className="p-6 sm:p-8">
                   <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{f.bio}</p>
                   <ul className="mt-6 grid gap-2.5">
                     {f.highlights.map((h) => (
                       <li key={h} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
                         {h}
                       </li>
                     ))}
@@ -56,7 +58,7 @@ export default function Founders() {
             <blockquote className="mt-6 max-w-3xl font-heading text-xl font-bold leading-relaxed sm:text-2xl" data-testid="founders-message">
               "We started Poonji Finance because we kept meeting people who were doing everything right — earning, saving, trying — and still getting poor financial outcomes simply because no one explained the system to them honestly. Our promise is simple: we will always tell you what we earn, what a product truly costs, and whether you should buy it at all."
             </blockquote>
-            <p className="mt-6 text-sm text-muted-foreground">— Aarav & Meera Sharma, Founders</p>
+            <p className="mt-6 text-sm text-muted-foreground">— Balbir, Harshual & Harshita Gogia, Poonji Finance</p>
             <div className="mt-10 flex flex-wrap gap-3">
               <Link to="/contact" data-testid="founders-contact-cta" className={buttonVariants({ size: "lg" })}>
                 Start a Conversation <ArrowRight className="h-4 w-4" />

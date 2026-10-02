@@ -21,7 +21,7 @@ export function SliderField({
     <div className="grid gap-2">
       <div className="flex items-center justify-between gap-4">
         <label htmlFor={testid} className="text-sm text-muted-foreground">{label}</label>
-        <span className="font-mono text-sm font-semibold text-sky-400">{format(value)}</span>
+        <span className="font-mono text-sm font-semibold text-gold">{format(value)}</span>
       </div>
       <input
         id={testid}

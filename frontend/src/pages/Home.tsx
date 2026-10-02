@@ -34,7 +34,7 @@ function EmiSandbox() {
     <div className="glass-card float-slow rounded-3xl p-6 shadow-2xl shadow-blue-950/40 sm:p-8" data-testid="hero-emi-sandbox">
       <div className="flex items-center justify-between">
         <p className="overline-tag">Live EMI Sandbox</p>
-        <Calculator className="h-4 w-4 text-sky-400" />
+        <Calculator className="h-4 w-4 text-gold" />
       </div>
       <div className="mt-6 grid gap-6">
         <SliderField testid="hero-emi-amount" label="Loan Amount" value={amount} min={100000} max={10000000} step={50000} onChange={setAmount} format={formatINR} />
@@ -42,10 +42,10 @@ function EmiSandbox() {
       </div>
       <div className="mt-6 border-t border-border/70 pt-5">
         <p className="text-xs text-muted-foreground">Monthly EMI @ 9.5% p.a.</p>
-        <p data-testid="hero-emi-value" className="mt-1 font-mono text-3xl font-bold text-sky-400">{formatINR(monthly)}</p>
+        <p data-testid="hero-emi-value" className="mt-1 font-mono text-3xl font-bold text-gold">{formatINR(monthly)}</p>
       </div>
-      <Link to="/calculators" data-testid="hero-emi-more" className="mt-4 inline-flex items-center gap-1.5 text-sm text-sky-400 transition-colors hover:text-sky-300">
-        Explore 8 financial tools <ArrowRight className="h-3.5 w-3.5" />
+      <Link to="/calculators" data-testid="hero-emi-more" className="mt-4 inline-flex items-center gap-1.5 text-sm text-gold transition-colors hover:text-gold-light">
+        Explore 16 financial tools <ArrowRight className="h-3.5 w-3.5" />
       </Link>
     </div>
   );
@@ -77,8 +77,8 @@ export default function Home() {
             </motion.p>
             <h1 className="mt-6 font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl lg:text-6xl">
               <HeroLine i={0}>Your Financial</HeroLine>
-              <HeroLine i={1}>Goals. <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">Our</span></HeroLine>
-              <HeroLine i={2}><span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">Guidance.</span></HeroLine>
+              <HeroLine i={1}>Goals. <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">Our</span></HeroLine>
+              <HeroLine i={2}><span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">Guidance.</span></HeroLine>
             </h1>
             <motion.p
               className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
@@ -134,10 +134,10 @@ export default function Home() {
                 data-testid={`bento-${s.slug}`}
                 className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-blue-600/60 hover:shadow-lg hover:shadow-blue-950/50"
               >
-                <s.icon className="h-7 w-7 text-sky-400" />
+                <s.icon className="h-7 w-7 text-gold" />
                 <h3 className="mt-4 font-heading text-lg font-bold">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.tagline}</p>
-                <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm text-sky-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm text-gold opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   Know more <ArrowRight className="h-3.5 w-3.5" />
                 </span>
               </Link>
@@ -151,7 +151,7 @@ export default function Home() {
           {STATS.map((s, i) => (
             <Reveal key={s.label} delay={i * 0.07}>
               <div className="rounded-2xl border border-border bg-background/60 p-6 text-center">
-                <p className="font-heading text-3xl font-bold tracking-tight text-sky-400">{s.value}</p>
+                <p className="font-heading text-3xl font-bold tracking-tight text-gold">{s.value}</p>
                 <p className="mt-1.5 text-sm text-muted-foreground">{s.label}</p>
               </div>
             </Reveal>
@@ -179,7 +179,7 @@ export default function Home() {
               {WHY_POINTS.map((w, i) => (
                 <Reveal key={w.title} delay={i * 0.05}>
                   <div className="rounded-xl border border-border bg-card p-5">
-                    <p className="font-mono text-xs text-sky-400">{String(i + 1).padStart(2, "0")}</p>
+                    <p className="font-mono text-xs text-gold">{String(i + 1).padStart(2, "0")}</p>
                     <h3 className="mt-2 font-heading text-base font-bold">{w.title}</h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{w.text}</p>
                   </div>
@@ -209,7 +209,7 @@ export default function Home() {
             ))}
           </div>
           <Reveal className="mt-10 text-center">
-            <Link to="/how-it-works" data-testid="steps-more" className="inline-flex items-center gap-1.5 text-sm text-sky-400 hover:text-sky-300">
+            <Link to="/how-it-works" data-testid="steps-more" className="inline-flex items-center gap-1.5 text-sm text-gold hover:text-gold-light">
               See the full process <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </Reveal>

@@ -41,7 +41,7 @@ export default function Blog() {
                 data-testid={`blog-filter-${c.toLowerCase().replace(/\s+/g, "-")}`}
                 onClick={() => setCat(c)}
                 className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
-                  cat === c ? "border-blue-600 bg-blue-600/20 text-sky-300" : "border-border text-muted-foreground hover:text-foreground"
+                  cat === c ? "border-blue-600 bg-blue-600/20 text-gold-light" : "border-border text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {c}

@@ -11,7 +11,7 @@ export default function BlogPost() {
     return (
       <div className="mx-auto max-w-3xl px-4 py-32 text-center">
         <h1 className="font-heading text-3xl font-bold">Article not found</h1>
-        <Link to="/blog" data-testid="post-back-missing" className="mt-6 inline-flex items-center gap-2 text-sky-400 hover:text-sky-300">
+        <Link to="/blog" data-testid="post-back-missing" className="mt-6 inline-flex items-center gap-2 text-gold hover:text-gold-light">
           <ArrowLeft className="h-4 w-4" /> Back to Blog
         </Link>
       </div>
@@ -26,7 +26,7 @@ export default function BlogPost() {
     <div>
       <article className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:py-28">
         <Reveal>
-          <Link to="/blog" data-testid="post-back" className="inline-flex items-center gap-2 text-sm text-sky-400 hover:text-sky-300">
+          <Link to="/blog" data-testid="post-back" className="inline-flex items-center gap-2 text-sm text-gold hover:text-gold-light">
             <ArrowLeft className="h-4 w-4" /> All articles
           </Link>
           <p className="overline-tag mt-8">{post.category}</p>
@@ -59,7 +59,7 @@ export default function BlogPost() {
                     <p className="overline-tag">{p.category}</p>
                     <h3 className="mt-2 font-heading text-base font-bold leading-snug">{p.title}</h3>
                   </div>
-                  <ArrowRight className="h-5 w-5 shrink-0 text-sky-400 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-5 w-5 shrink-0 text-gold transition-transform group-hover:translate-x-1" />
                 </Link>
               ))}
             </div>

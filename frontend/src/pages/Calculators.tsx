@@ -7,6 +7,16 @@ import { EmiGeneral, EmiHome, EmiPersonal } from "@/components/calc/LoanCalcs";
 import { SipCalc, LumpsumCalc } from "@/components/calc/InvestCalcs";
 import { FdCalc, RdCalc } from "@/components/calc/DepositCalcs";
 import { EligibilityCalc } from "@/components/calc/EligibilityCalc";
+import {
+  StepUpSipCalc,
+  SwpCalc,
+  CagrCalc,
+  SimpleInterestCalc,
+  CompoundInterestCalc,
+  InflationCalc,
+  RetirementCalc,
+  GoalCalc,
+} from "@/components/calc/AdvancedCalcs";
 
 const TABS = [
   { id: "emi", label: "Loan EMI", node: <EmiGeneral /> },
@@ -14,9 +24,17 @@ const TABS = [
   { id: "personal", label: "Personal Loan", node: <EmiPersonal /> },
   { id: "eligibility", label: "Eligibility", node: <EligibilityCalc /> },
   { id: "sip", label: "SIP", node: <SipCalc /> },
+  { id: "stepup", label: "Step-Up SIP", node: <StepUpSipCalc /> },
   { id: "lumpsum", label: "Lump Sum", node: <LumpsumCalc /> },
+  { id: "swp", label: "SWP", node: <SwpCalc /> },
+  { id: "cagr", label: "CAGR", node: <CagrCalc /> },
   { id: "fd", label: "FD", node: <FdCalc /> },
   { id: "rd", label: "RD", node: <RdCalc /> },
+  { id: "simple", label: "Simple Int", node: <SimpleInterestCalc /> },
+  { id: "compound", label: "Compound Int", node: <CompoundInterestCalc /> },
+  { id: "inflation", label: "Inflation", node: <InflationCalc /> },
+  { id: "retirement", label: "Retirement", node: <RetirementCalc /> },
+  { id: "goal", label: "Goal Plan", node: <GoalCalc /> },
 ];
 
 export default function Calculators() {
@@ -27,10 +45,10 @@ export default function Calculators() {
           <Reveal>
             <p className="overline-tag">Financial Tools</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              Run the numbers <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">before you sign anything</span>
+              Run the numbers <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">before you sign anything</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Eight interactive calculators for loans, deposits and investments — live results as you drag. Free, instant, no sign-up.
+              Sixteen interactive calculators for loans, deposits, investments and life goals — live results as you drag. Free, instant, no sign-up.
             </p>
           </Reveal>
         </div>

@@ -55,7 +55,7 @@ export function EmiPersonal() {
     <div>
       <EmiCore idPrefix="ploan" amount={amount} setAmount={setAmount} rate={rate} setRate={setRate} years={years} setYears={setYears} minAmount={50000} maxAmount={4000000} minRate={10.5} maxRate={24} minYears={1} maxYears={5} stepAmount={25000} />
       <p className="mt-6 text-xs text-muted-foreground" data-testid="ploan-fee-note">
-        Indicative processing fee at 2% + GST: <span className="font-mono text-sky-400">{formatINR(fee)}</span>. Actual fees vary by lender.
+        Indicative processing fee at 2% + GST: <span className="font-mono text-gold">{formatINR(fee)}</span>. Actual fees vary by lender.
       </p>
     </div>
   );

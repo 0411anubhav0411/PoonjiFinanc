@@ -43,7 +43,7 @@ export default function Faq() {
                 data-testid={`faq-filter-${c.toLowerCase()}`}
                 onClick={() => setCat(c)}
                 className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
-                  cat === c ? "border-blue-600 bg-blue-600/20 text-sky-300" : "border-border text-muted-foreground hover:text-foreground"
+                  cat === c ? "border-blue-600 bg-blue-600/20 text-gold-light" : "border-border text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {c}
@@ -67,7 +67,7 @@ export default function Faq() {
                     aria-expanded={isOpen}
                   >
                     <span className="font-heading text-base font-bold leading-snug">{f.q}</span>
-                    <ChevronDown className={`h-5 w-5 shrink-0 text-sky-400 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`h-5 w-5 shrink-0 text-gold transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
                   </button>
                   <AnimatePresence initial={false}>
                     {isOpen && (

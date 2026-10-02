@@ -71,7 +71,7 @@
     --input: #1E293B;
     --ring: #3B82F6;
     --chart-1: #2563EB;
-    --chart-2: #06B6D4;
+    --chart-2: #D4AF37;
     --chart-3: #10B981;
     --chart-4: #F59E0B;
     --chart-5: #94A3B8;
@@ -106,7 +106,7 @@
     --input: #1E293B;
     --ring: #3B82F6;
     --chart-1: #2563EB;
-    --chart-2: #06B6D4;
+    --chart-2: #D4AF37;
     --chart-3: #10B981;
     --chart-4: #F59E0B;
     --chart-5: #94A3B8;
@@ -171,7 +171,7 @@
     @apply bg-card/70 backdrop-blur-xl border border-border;
   }
   .overline-tag {
-    @apply font-mono text-xs font-semibold uppercase tracking-[0.22em] text-sky-400;
+    @apply font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[#E4C66B];
   }
   .float-slow {
     animation: float-slow 7s ease-in-out infinite;
@@ -205,4 +205,16 @@
   select.pf-select {
     @apply flex h-9 w-full rounded-md border border-input bg-secondary/60 px-3 py-1 text-sm text-foreground shadow-xs transition-colors focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none;
   }
+}
+
+@utility text-gold {
+  color: #E4C66B;
+}
+
+@utility text-gold-light {
+  color: #F0DCA0;
+}
+
+@utility bg-gold {
+  background-color: #D4AF37;
 }

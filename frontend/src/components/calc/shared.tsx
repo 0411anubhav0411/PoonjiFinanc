@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { formatINRCompact } from "@/lib/format";
 
-const COLORS = ["#2563EB", "#06B6D4"];
+const COLORS = ["#2563EB", "#D4AF37"];
 
 export function BreakdownDonut({
   a,
@@ -42,7 +42,7 @@ export function ResultRow({ label, value, highlight = false, testid }: { label: 
   return (
     <div className="flex items-baseline justify-between gap-4 border-b border-border/60 py-2.5 last:border-0">
       <span className="text-sm text-muted-foreground">{label}</span>
-      <span data-testid={testid} className={`font-mono font-bold ${highlight ? "text-xl text-sky-400 sm:text-2xl" : "text-base text-foreground"}`}>
+      <span data-testid={testid} className={`font-mono font-bold ${highlight ? "text-xl text-gold sm:text-2xl" : "text-base text-foreground"}`}>
         {value}
       </span>
     </div>

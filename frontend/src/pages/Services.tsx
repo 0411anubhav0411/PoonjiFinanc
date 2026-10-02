@@ -24,7 +24,7 @@ export default function Services() {
           <Reveal>
             <p className="overline-tag">Our Services</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              Every financial product you'll need, <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">facilitated properly</span>
+              Every financial product you'll need, <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">facilitated properly</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Loans, insurance, deposits and investments — compared across 45+ partner institutions and processed with you, end to end. New products are added as our partner network grows.
@@ -39,7 +39,7 @@ export default function Services() {
             <Reveal key={s.slug} delay={(i % 2) * 0.08}>
               <article className="flex h-full flex-col rounded-3xl border border-border bg-card p-7 transition-all duration-300 hover:border-blue-600/60 sm:p-8">
                 <div className="flex items-start justify-between gap-4">
-                  <s.icon className="h-8 w-8 text-sky-400" />
+                  <s.icon className="h-8 w-8 text-gold" />
                   <span className="font-mono text-xs text-muted-foreground/60">{String(i + 1).padStart(2, "0")}</span>
                 </div>
                 <h2 className="mt-5 font-heading text-xl font-bold sm:text-2xl">{s.title}</h2>

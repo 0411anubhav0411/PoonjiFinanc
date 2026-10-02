@@ -32,17 +32,26 @@ Build a modern, premium, trustworthy multi-page website for Poonji Finance, an I
 - `yarn typecheck` clean.
 - Browser pass: hero, SIP calc (₹1,26,14,400 @ ₹25k/15y/12%), enquiry submit → toast + appears in admin table, admin login.
 
+## Implemented (2026-10-02, round 2)
+- Real founders: Balbir Singh Gogia (Founder & Managing Partner), Harshual Singh Gogia (Partner & CEO), Harshita Singh Gogia (COO) — monogram cards (no photos provided yet).
+- Brand: company logo (logo.png) in navbar/footer/favicon; theme re-tuned to logo palette — royal blue + gold accents, red kept minimal (marquee separators only).
+- Lead email alerts: Emergent managed Resend proxy; HTML template + guardrail gate; fires non-blocking on every enquiry/callback. Verified 202 Accepted with test inbox. Recipient = LEAD_NOTIFY_EMAIL in backend/.env — currently placeholder hello@poonjifinance.in (proxy 422s on it — needs the user's REAL inbox email).
+- Calculators: 8 more added (Step-Up SIP, SWP, CAGR, Simple Interest, Compound Interest, Inflation, Retirement, Goal-Based) → 16 total.
+- Admin: per-lead status pills (New/Contacted/Closed) via POST /api/leads/{kind}/{id}/status + one-click CSV export per tab.
+
+## Verified (round 2)
+- curl: enquiry returns status=new; status PATCH→contacted persists; invalid status 422; unauth status change 401; email proxy 202 with send ID (delivered@resend.dev test).
+- Browser: founders grid shows all 3 Gogias; Retirement (₹8.61 Cr corpus), Goal (₹1.57 Cr), SWP (₹96 L withdrawn) compute live; admin status select flips to Closed.
+- yarn typecheck clean.
+
 ## Backlog
-- P0: Replace placeholder founder names/photos + contact details with real ones (awaiting user input)
-- P1: Email notifications on new leads (Resend managed integration)
-- P1: Remaining calculators (Step-Up SIP, SWP, CAGR, Simple/Compound Interest, Inflation, Retirement, Goal-based)
+- P0: Real LEAD_NOTIFY_EMAIL from user (alerts currently target placeholder address) + real phone/email/address sitewide
+- P1: Founder photos + final bios from user
 - P1: Google Maps embed on Contact
-- P2: Admin lead status updates + CSV export
-- P2: Blog CMS (admin-managed posts instead of static content.ts)
-- P2: SEO metadata per page, sitemap, analytics
+- P2: Blog CMS, SEO metadata, analytics
 - P3: Customer portal, application tracking, document upload, CRM integration
 
 ## Next Tasks
-1. Swap in real founder/contact details when user provides them
-2. Resend email alerts for new leads
-3. Add remaining 9 calculators
+1. Set real owner inbox email for lead alerts
+2. Replace placeholder contact details
+3. Founder photos

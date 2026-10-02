@@ -17,7 +17,7 @@ export default function HowItWorks() {
           <Reveal>
             <p className="overline-tag">How It Works</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              Five steps. <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">Zero guesswork.</span>
+              Five steps. <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">Zero guesswork.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               From your first enquiry to final approval, here's exactly what happens — and what we handle for you at each stage.
@@ -36,7 +36,7 @@ export default function HowItWorks() {
                 whileHover={{ x: 6 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
               >
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-blue-600/40 bg-card font-mono text-lg font-bold text-sky-400 sm:h-16 sm:w-16">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-blue-600/40 bg-card font-mono text-lg font-bold text-gold sm:h-16 sm:w-16">
                   {s.n}
                 </div>
                 <div className="rounded-2xl border border-border bg-card p-6 sm:p-7">

@@ -16,7 +16,7 @@ export default function Contact() {
           <Reveal>
             <p className="overline-tag">Contact Us</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              Talk to a human, <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">not a bot</span>
+              Talk to a human, <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">not a bot</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Call, WhatsApp, email or drop an enquiry — every route lands with a real advisor.
@@ -38,12 +38,12 @@ export default function Contact() {
               <Reveal key={c.label} delay={i * 0.05}>
                 <div className="flex items-center gap-4 rounded-2xl border border-border bg-card p-5">
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-600/15">
-                    <c.icon className="h-5 w-5 text-sky-400" />
+                    <c.icon className="h-5 w-5 text-gold" />
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground">{c.label}</p>
                     {c.href ? (
-                      <a data-testid={c.testid} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="text-sm font-semibold text-foreground transition-colors hover:text-sky-400">
+                      <a data-testid={c.testid} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="text-sm font-semibold text-foreground transition-colors hover:text-gold">
                         {c.value}
                       </a>
                     ) : (

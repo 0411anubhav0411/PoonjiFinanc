@@ -62,7 +62,7 @@ export default function Layout() {
                 data-testid={`nav-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
                 className={({ isActive }) =>
                   `rounded-md px-3 py-2 text-sm transition-colors ${
-                    isActive ? "text-sky-400" : "text-muted-foreground hover:text-foreground"
+                    isActive ? "text-gold" : "text-muted-foreground hover:text-foreground"
                   }`
                 }
               >

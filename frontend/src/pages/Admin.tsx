@@ -25,6 +25,7 @@ interface Enquiry {
   requirement?: string | null;
   message?: string | null;
   created_at: string;
+  status?: string;
 }
 
 interface Callback {
@@ -33,11 +34,57 @@ interface Callback {
   mobile: string;
   preferred_time?: string | null;
   created_at: string;
+  status?: string;
 }
 
 interface Leads {
   enquiries: Enquiry[];
   callbacks: Callback[];
+}
+
+const STATUS_STYLES: Record<string, string> = {
+  new: "border-blue-500/40 bg-blue-500/10 text-blue-300",
+  contacted: "border-amber-500/40 bg-amber-500/10 text-amber-300",
+  closed: "border-emerald-500/40 bg-emerald-500/10 text-emerald-300",
+};
+
+function downloadCsv(filename: string, rows: Record<string, unknown>[]) {
+  if (!rows.length) return;
+  const headers = Object.keys(rows[0]);
+  const esc = (v: unknown) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const csv = [headers.join(","), ...rows.map((r) => headers.map((h) => esc(r[h])).join(","))].join("\n");
+  const url = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function StatusSelect({ kind, id, status }: { kind: "enquiries" | "callbacks"; id: string; status?: string }) {
+  const queryClient = useQueryClient();
+  const value = status ?? "new";
+  return (
+    <select
+      data-testid={`status-${kind}-${id.slice(0, 8)}`}
+      aria-label="Lead status"
+      className={`cursor-pointer rounded-full border px-2.5 py-1 text-xs font-medium capitalize outline-none ${STATUS_STYLES[value]}`}
+      value={value}
+      onChange={async (e) => {
+        try {
+          await apiPost(`/leads/${kind}/${id}/status`, { status: e.target.value });
+          queryClient.invalidateQueries({ queryKey: ["admin-leads"] });
+          toast.success(`Marked as ${e.target.value}`);
+        } catch {
+          toast.error("Could not update status");
+        }
+      }}
+    >
+      <option value="new">New</option>
+      <option value="contacted">Contacted</option>
+      <option value="closed">Closed</option>
+    </select>
+  );
 }
 
 function fmtDate(iso: string) {
@@ -122,7 +169,21 @@ export default function Admin() {
           <h1 className="mt-2 font-heading text-3xl font-bold">Leads Dashboard</h1>
           <p className="mt-1 text-sm text-muted-foreground">Signed in as {me.data.email}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <Button
+            data-testid="admin-export-enquiries"
+            variant="outline"
+            onClick={() => leads.data && downloadCsv("poonji-enquiries.csv", leads.data.enquiries as unknown as Record<string, unknown>[])}
+          >
+            Enquiries CSV
+          </Button>
+          <Button
+            data-testid="admin-export-callbacks"
+            variant="outline"
+            onClick={() => leads.data && downloadCsv("poonji-callbacks.csv", leads.data.callbacks as unknown as Record<string, unknown>[])}
+          >
+            Callbacks CSV
+          </Button>
           <Button data-testid="admin-refresh" variant="outline" onClick={() => leads.refetch()}>
             <RefreshCw className="h-4 w-4" /> Refresh
           </Button>
@@ -152,23 +213,25 @@ export default function Admin() {
                   <TableHead>City</TableHead>
                   <TableHead>Service</TableHead>
                   <TableHead>Requirement</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead>Received</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {(leads.data?.enquiries ?? []).map((e) => (
                   <TableRow key={e.id}>
-                    <TableCell className="font-mono text-xs text-sky-400">{e.id.slice(0, 8).toUpperCase()}</TableCell>
+                    <TableCell className="font-mono text-xs text-gold">{e.id.slice(0, 8).toUpperCase()}</TableCell>
                     <TableCell className="font-medium">{e.name}</TableCell>
                     <TableCell className="text-xs">{e.mobile}<br />{e.email}</TableCell>
                     <TableCell>{e.city}</TableCell>
                     <TableCell>{e.service}</TableCell>
                     <TableCell>{e.requirement ?? "—"}</TableCell>
+                    <TableCell><StatusSelect kind="enquiries" id={e.id} status={e.status} /></TableCell>
                     <TableCell className="text-xs text-muted-foreground">{fmtDate(e.created_at)}</TableCell>
                   </TableRow>
                 ))}
                 {leads.data && leads.data.enquiries.length === 0 && (
-                  <TableRow><TableCell colSpan={7} className="py-10 text-center text-muted-foreground">No enquiries yet.</TableCell></TableRow>
+                  <TableRow><TableCell colSpan={8} className="py-10 text-center text-muted-foreground">No enquiries yet.</TableCell></TableRow>
                 )}
               </TableBody>
             </Table>
@@ -183,21 +246,23 @@ export default function Admin() {
                   <TableHead>Name</TableHead>
                   <TableHead>Mobile</TableHead>
                   <TableHead>Preferred Time</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead>Received</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {(leads.data?.callbacks ?? []).map((c) => (
                   <TableRow key={c.id}>
-                    <TableCell className="font-mono text-xs text-sky-400">{c.id.slice(0, 8).toUpperCase()}</TableCell>
+                    <TableCell className="font-mono text-xs text-gold">{c.id.slice(0, 8).toUpperCase()}</TableCell>
                     <TableCell className="font-medium">{c.name}</TableCell>
                     <TableCell>{c.mobile}</TableCell>
                     <TableCell>{c.preferred_time ?? "—"}</TableCell>
+                    <TableCell><StatusSelect kind="callbacks" id={c.id} status={c.status} /></TableCell>
                     <TableCell className="text-xs text-muted-foreground">{fmtDate(c.created_at)}</TableCell>
                   </TableRow>
                 ))}
                 {leads.data && leads.data.callbacks.length === 0 && (
-                  <TableRow><TableCell colSpan={5} className="py-10 text-center text-muted-foreground">No callback requests yet.</TableCell></TableRow>
+                  <TableRow><TableCell colSpan={6} className="py-10 text-center text-muted-foreground">No callback requests yet.</TableCell></TableRow>
                 )}
               </TableBody>
             </Table>

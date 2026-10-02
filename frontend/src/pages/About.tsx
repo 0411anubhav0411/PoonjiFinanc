@@ -21,7 +21,7 @@ export default function About() {
           <Reveal>
             <p className="overline-tag">About Us</p>
             <h1 className="mt-4 max-w-3xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tighter sm:text-5xl">
-              Finance is complicated. <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">Accessing it shouldn't be.</span>
+              Finance is complicated. <span className="bg-gradient-to-r from-blue-500 to-[#D4AF37] bg-clip-text text-transparent">Accessing it shouldn't be.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Poonji Finance is a financial services facilitation and distribution platform. We exist because capable people — salaried professionals, business owners, families — routinely get lost between fifty lenders, a hundred schemes and a thousand pages of fine print. We make the market legible, then walk the process with you.
@@ -84,7 +84,7 @@ export default function About() {
           {VALUES.map((v, i) => (
             <Reveal key={v.title} delay={i * 0.05}>
               <div className="h-full rounded-2xl border border-border bg-card p-6 transition-colors hover:border-blue-600/50">
-                <v.icon className="h-6 w-6 text-sky-400" />
+                <v.icon className="h-6 w-6 text-gold" />
                 <h3 className="mt-4 font-heading text-lg font-bold">{v.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{v.text}</p>
               </div>
@@ -94,7 +94,7 @@ export default function About() {
         <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STATS.map((s) => (
             <div key={s.label} className="rounded-2xl border border-border bg-card p-6 text-center">
-              <p className="font-heading text-3xl font-bold text-sky-400">{s.value}</p>
+              <p className="font-heading text-3xl font-bold text-gold">{s.value}</p>
               <p className="mt-1.5 text-sm text-muted-foreground">{s.label}</p>
             </div>
           ))}

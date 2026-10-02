@@ -140,18 +140,25 @@ export const STATS = [
 
 export const FOUNDERS = [
   {
-    name: "Aarav Sharma",
-    role: "Founder & Managing Director",
-    image: "https://images.unsplash.com/photo-1771244688590-1e481dba1b5a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHw0fHxpbmRpYW4lMjBmaW5hbmNpYWwlMjBhZHZpc29yJTIwdGVhbSUyMG9mZmljZXxlbnwwfHx8fDE3OTA5MTEwMjV8MA&ixlib=rb-4.1.0&q=85",
-    bio: "Aarav spent over 15 years across retail credit at leading private banks and NBFCs, watching capable borrowers get lost between products, paperwork and jargon. Poonji Finance is his answer: one accountable desk that compares the market for the customer, not for the lender.",
-    highlights: ["Ex-credit leadership across two Tier-1 banks", "Facilitated ₹300 Cr+ in retail & MSME credit", "Believes transparency is a growth strategy"],
+    name: "Balbir Singh Gogia",
+    role: "Founder & Managing Partner",
+    initials: "BG",
+    bio: "The vision behind Poonji Finance. Balbir founded the firm on a simple conviction: people who earn honestly deserve honest guidance. He leads the partner network across banks, NBFCs, insurers and investment platforms, and personally sets the transparency standard every Poonji advisor works by.",
+    highlights: ["Founded Poonji Finance on a transparency-first doctrine", "Leads the banking, NBFC & insurance partner network", "Sets the firm's customer-first credit philosophy"],
   },
   {
-    name: "Meera Sharma",
-    role: "Co-Founder & Director — Operations",
-    image: "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBmaW5hbmNpYWwlMjBhZHZpc29yJTIwdGVhbSUyMG9mZmljZXxlbnwwfHx8fDE3OTA5MTEwMjV8MA&ixlib=rb-4.1.0&q=85",
-    bio: "Meera built her career in insurance distribution and wealth operations, where she saw families buy products they never understood. At Poonji she owns process design — simplified documentation, honest timelines and a service standard that treats every customer like a long-term relationship.",
-    highlights: ["12+ years in insurance & wealth operations", "Architect of Poonji's 5-step facilitation pipeline", "Champions plain-language financial education"],
+    name: "Harshual Singh Gogia",
+    role: "Partner & Chief Executive Officer",
+    initials: "HG",
+    bio: "Harshual drives Poonji Finance's strategy and growth — which products we facilitate, which institutions we partner with, and how the platform scales without losing its personal, accountable service. His focus is making 'One Platform. Multiple Financial Solutions.' a daily reality for customers.",
+    highlights: ["Owns strategy, partnerships & platform growth", "Champions simplified, jargon-free customer journeys", "Driving Poonji's digital-first facilitation model"],
+  },
+  {
+    name: "Harshita Singh Gogia",
+    role: "Chief Operating Officer",
+    initials: "HSG",
+    bio: "Harshita runs the engine room: documentation checklists, application processing, follow-ups with institutions, and the service standards behind the 30-minute callback pledge. If your file moves smoothly from enquiry to approval, that's her team's design.",
+    highlights: ["Architect of the 5-step facilitation pipeline", "Owns operations, documentation & service quality", "Leads customer education and plain-language communication"],
   },
 ];
 
